@@ -1,4 +1,5 @@
 #include "ModuleEditor.h"
+#include "Application.h"
 #include "imgui\imgui.h"
 #include "imgui\imgui_impl_sdl_gl3.h"
 
@@ -12,11 +13,15 @@ ModuleEditor::~ModuleEditor()
 
 bool ModuleEditor::Init()
 {
+	ImGui_ImplSdlGL3_NewFrame(App->window->window);
+	ImGuiIO& io = ImGui::GetIO();
 	return true;
 }
 
 update_status ModuleEditor::PreUpdate(float dt)
 {
+	ImGui_ImplSdlGL3_NewFrame(App->window->window);
+	ImGuiIO& io = ImGui::GetIO();
 	return UPDATE_CONTINUE;
 }
 
@@ -29,7 +34,7 @@ update_status ModuleEditor::Update(float dt)
 	if (ImGui::Button("Test Window")) show_test_window ^= 1;
 	if (ImGui::Button("Another Window")) show_another_window ^= 1;*/
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
+	ImGui::Render();
 	return UPDATE_CONTINUE;
 }
 
@@ -40,5 +45,6 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 bool ModuleEditor::CleanUp()
 {
+	ImGui_ImplSdlGL3_Shutdown();
 	return true;
 }
