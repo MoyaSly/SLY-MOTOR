@@ -17,5 +17,10 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
+
+
+	bool show_test_window = true;
+	bool show_another_window = false;
+	float input = 0;
 };
 #endif

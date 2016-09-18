@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "imgui\imgui.h"
 #include "imgui\imgui_impl_sdl_gl3.h"
+#include "Glew\include\glew.h"
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -13,28 +14,40 @@ ModuleEditor::~ModuleEditor()
 
 bool ModuleEditor::Init()
 {
-	ImGui_ImplSdlGL3_NewFrame(App->window->window);
-	ImGuiIO& io = ImGui::GetIO();
 	return true;
 }
 
 update_status ModuleEditor::PreUpdate(float dt)
 {
-	ImGui_ImplSdlGL3_NewFrame(App->window->window);
-	ImGuiIO& io = ImGui::GetIO();
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleEditor::Update(float dt)
 {
 	static float f = 0.0f;
-	ImGui::Text("Hola");
+	ImGui::TextColored(RED, "PORFIN FUNCIONA ESTA MIERDA");
+	ImGui::InputFloat(" ", &input);
 	ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-	/*ImGui::ColorEdit3("clear color", (float*)&App->renderer3D->clear_color);
 	if (ImGui::Button("Test Window")) show_test_window ^= 1;
-	if (ImGui::Button("Another Window")) show_another_window ^= 1;*/
+	if (ImGui::Button("Another Window")) show_another_window ^= 1;
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-	ImGui::Render();
+
+	if (show_another_window)
+	{
+		ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiSetCond_FirstUseEver);
+		ImGui::SetNextWindowPos(ImVec2(75, 500));
+		ImGui::Begin("Another Window", &show_another_window);
+		ImGui::TextColored(BLUE, "MOLAA EHH");
+		ImGui::End();
+	}
+
+	// 3. Show the ImGui test window. Most of the sample code is in ImGui::ShowTestWindow()
+	if (show_test_window)
+	{
+		ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
+		ImGui::ShowTestWindow(&show_test_window);
+	}
+
 	return UPDATE_CONTINUE;
 }
 

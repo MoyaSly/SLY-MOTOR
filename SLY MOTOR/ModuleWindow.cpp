@@ -38,28 +38,21 @@ bool ModuleWindow::Init()
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
 		if(WIN_FULLSCREEN == true)
-		{
 			flags |= SDL_WINDOW_FULLSCREEN;
-		}
 
 		if(WIN_RESIZABLE == true)
-		{
 			flags |= SDL_WINDOW_RESIZABLE;
-		}
+		
 
 		if(WIN_BORDERLESS == true)
-		{
 			flags |= SDL_WINDOW_BORDERLESS;
-		}
 
 		if(WIN_FULLSCREEN_DESKTOP == true)
-		{
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-		}
 
 		SDL_DisplayMode current;
 		SDL_GetCurrentDisplayMode(0, &current);
-		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
 
 		if(window == NULL)
 		{

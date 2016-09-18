@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "Glew\include\glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -17,7 +18,8 @@ ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Modul
 
 // Destructor
 ModuleRenderer3D::~ModuleRenderer3D()
-{}
+{
+}
 
 // Called before render is available
 bool ModuleRenderer3D::Init()
@@ -32,6 +34,11 @@ bool ModuleRenderer3D::Init()
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
+
+	GLenum gl_enum = glewInit();
+
+	if (gl_enum != GLEW_OK)
+		LOG("Glew hasn't been initialized!");
 	
 	if(ret == true)
 	{
@@ -120,12 +127,18 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
+	ImGui_ImplSdlGL3_NewFrame(App->window->window);
+
 	return UPDATE_CONTINUE;
 }
 
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	// Rendering
+	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
+	ImGui::Render();
+
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }

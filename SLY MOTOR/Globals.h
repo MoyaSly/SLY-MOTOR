@@ -31,4 +31,11 @@ enum update_status
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
-#define TITLE "3D Physics Simulator                                                      Loading..."
+#define TITLE "MOTOR SLY"
+
+#define GREY ImVec4(0.6f,0.6f,0.6f,1.f)
+#define BLUE ImVec4(0.2f,0.2f,1.f,1.f)
+#define GREEN ImVec4(0.f,1.f,0.f,1.f)
+#define YELLOW ImVec4(1.f,1.f,0.f,1.f)
+#define RED ImVec4(1.f,0.f,0.f,1.f)
+#define WHITE ImVec4(1.f,1.f,1.f,1.f)
