@@ -135,3 +135,50 @@ void Application::RequestBrowser(const char * url) const
 {
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
+
+const char* Application::GetAppName() const
+{
+	return app_name.c_str();
+}
+
+// ---------------------------------------------
+void Application::SetAppName(const char * name)
+{
+	if (name != nullptr && name != app_name)
+	{
+		app_name = name;
+		window->SetTitle(name);
+	}
+}
+
+// ---------------------------------------------
+const char* Application::GetOrganizationName() const
+{
+	return org_name.c_str();
+}
+
+void Application::SetOrganizationName(const char * name)
+{
+	if (name != nullptr && name != org_name)
+	{
+		org_name = name;
+	}
+}
+
+// ---------------------------------------------
+uint Application::GetFramerateLimit() const
+{
+	if (ms > 0)
+		return (uint)((1.0f / (float)ms) * 1000.0f);
+	else
+		return 0;
+}
+
+// ---------------------------------------------
+void Application::SetFramerateLimit(uint max_framerate)
+{
+	if (max_framerate > 0)
+		ms = 1000 / max_framerate;
+	else
+		ms = 0;
+}

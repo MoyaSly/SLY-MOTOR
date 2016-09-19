@@ -28,6 +28,9 @@
     <Filter Include="Sources\ExternLibs\MathGeoLib">
       <UniqueIdentifier>{5377ec70-d0b3-4a1f-8930-5674c839ee65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\ExternLibs\mmgr">
+      <UniqueIdentifier>{5f70bf14-2118-4f03-b2cc-b834b5cf579a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">

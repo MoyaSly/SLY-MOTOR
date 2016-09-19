@@ -13,6 +13,8 @@
 #include "ModulePhysics3D.h"
 #include "ModuleEditor.h"
 
+using namespace std;
+
 class Application
 {
 public:
@@ -31,6 +33,10 @@ private:
 	float	dt;
 	p2List<Module*> list_modules;
 
+	int		ms;
+	string app_name;
+	string org_name;
+
 public:
 
 	Application();
@@ -40,6 +46,12 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void RequestBrowser(const char* url) const;
+	const char* GetAppName() const;
+	void SetAppName(const char* name);
+	const char* GetOrganizationName() const;
+	void SetOrganizationName(const char* name);
+	uint GetFramerateLimit() const;
+	void SetFramerateLimit(uint max_framerate);
 
 private:
 

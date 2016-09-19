@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include <vector>
 
 class ModuleEditor : public Module
 {
@@ -16,12 +17,16 @@ public:
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
+	void DrawApplication();
 	bool CleanUp();
 
-
-	bool show_test_window = true;
-	bool show_another_window = false;
+	bool show_test_window = false;
+	bool show_configuration = true;
 	bool show_menu_bar = true;
-	float input = 0;
+	bool show_console = true;
+
+private:
+	std::vector<float> fps_log;
+	std::vector<float> ms_log;
 };
 #endif
