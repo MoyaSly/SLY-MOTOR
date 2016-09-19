@@ -24,6 +24,7 @@ update_status ModuleEditor::PreUpdate(float dt)
 
 update_status ModuleEditor::Update(float dt)
 {
+	update_status ret = UPDATE_CONTINUE;
 	static float f = 0.0f;
 	ImGui::TextColored(RED, "PORFIN FUNCIONA ESTA MIERDA");
 	ImGui::InputFloat(" ", &input);
@@ -41,15 +42,52 @@ update_status ModuleEditor::Update(float dt)
 		ImGui::End();
 	}
 
-	// 3. Show the ImGui test window. Most of the sample code is in ImGui::ShowTestWindow()
 	if (show_test_window)
 	{
 		ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
 		ImGui::ShowTestWindow(&show_test_window);
 	}
 
-	return UPDATE_CONTINUE;
+	if (show_menu_bar)
+	{
+		if (ImGui::BeginMainMenuBar())
+		{
+			if (ImGui::BeginMenu("File"))
+			{
+				if (ImGui::MenuItem("Quit", "ESC"))
+					ret = UPDATE_STOP;
+
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("View"))
+			{
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("Help"))
+			{
+				if (ImGui::MenuItem("Gui Demo"))
+				{
+					show_test_window = true;
+				}
+
+				if (ImGui::MenuItem("Documentation"))
+					App->RequestBrowser("https://github.com/MoyaSly/SLY-MOTOR/wiki");
+
+				if (ImGui::MenuItem("Download latest"))
+					App->RequestBrowser("https://github.com/MoyaSly/SLY-MOTOR/releases");
+
+				if (ImGui::MenuItem("Report a bug"))
+					App->RequestBrowser("https://github.com/MoyaSly/SLY-MOTOR/issues");
+				ImGui::EndMenu();
+			}
+				ImGui::EndMainMenuBar();
+		}
+	}
+	return ret;
 }
+
 
 update_status ModuleEditor::PostUpdate(float dt)
 {

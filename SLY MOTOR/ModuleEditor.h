@@ -21,6 +21,7 @@ public:
 
 	bool show_test_window = true;
 	bool show_another_window = false;
+	bool show_menu_bar = true;
 	float input = 0;
 };
 #endif

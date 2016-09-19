@@ -130,3 +130,8 @@ void Application::AddModule(Module* mod)
 {
 	list_modules.add(mod);
 }
+
+void Application::RequestBrowser(const char * url) const
+{
+	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
