@@ -94,7 +94,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 void ModuleEditor::DrawApplication()
 {
-	/*if (ImGui::CollapsingHeader("Application"))
+	if (ImGui::CollapsingHeader("Application"))
 	{
 		static char app_name[120];
 		strcpy_s(app_name, 120, App->GetAppName());
@@ -115,7 +115,7 @@ void ModuleEditor::DrawApplication()
 		ImGui::TextColored(YELLOW, "%i", App->GetFramerateLimit());
 
 		char title[25];
-		sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
+	/*	sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
 		ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 		sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
 		ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
@@ -148,8 +148,8 @@ void ModuleEditor::DrawApplication()
 		ImGui::Text("Accumulated Actual Mem: %u", stats.accumulatedActualMemory);
 		ImGui::Text("Accumulated Alloc Unit Count: %u", stats.accumulatedAllocUnitCount);
 		ImGui::Text("Total Alloc Unit Count: %u", stats.totalAllocUnitCount);
-		ImGui::Text("Peak Alloc Unit Count: %u", stats.peakAllocUnitCount);
-	}*/
+		ImGui::Text("Peak Alloc Unit Count: %u", stats.peakAllocUnitCount);*/
+	}
 }
 
 bool ModuleEditor::CleanUp()
