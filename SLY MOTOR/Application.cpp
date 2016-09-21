@@ -70,13 +70,32 @@ bool Application::Init()
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
-	dt = (float)ms_timer.Read() / 1000.0f;
+	frame_count++;
+	last_frame_count++;
+
+	dt = (float)ms_timer.Read();
 	ms_timer.Start();
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	if (SecCounter())
+	{
+		frame_time.Start();
+		prev_frame_count = last_frame_count;
+		last_frame_count = 0;
+	}
+
+	last_frame_ms = frame_time.Read();
+
+
+	if (ms > 0 && last_frame_ms < ms)
+	{
+		PerfTimer t;
+		SDL_Delay(ms - last_frame_ms);
+		//LOG("We waited for %d milliseconds and got back in %f", capped_ms - last_frame_ms, t.ReadMs());
+	}
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
@@ -181,4 +200,19 @@ void Application::SetFramerateLimit(uint max_framerate)
 		ms = 1000 / max_framerate;
 	else
 		ms = 0;
+}
+
+int Application::GetFPS()
+{
+	return prev_frame_count;
+}
+
+int Application::GetFrameMs()
+{
+	return last_frame_ms;
+}
+
+bool Application::SecCounter()
+{
+	return (frame_time.Read() > 1000);
 }

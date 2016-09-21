@@ -18,6 +18,7 @@ public:
 
 	Uint32 Chronometer(bool set, int pos); // Sets/Returns started match time. Set = Is Set? Pos = Min/Sec/Milisec
 	Uint32 Read();
+	float ReadSec()const;
 
 private:
 

@@ -1,9 +1,10 @@
 #include "ModuleEditor.h"
 #include "Application.h"
+#include "Primitive.h"
 #include "imgui\imgui.h"
 #include "imgui\imgui_impl_sdl_gl3.h"
 #include "Glew\include\glew.h"
-#include "mmgr/mmgr.h"
+#include "Imgui/imgui.h"
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -15,6 +16,10 @@ ModuleEditor::~ModuleEditor()
 
 bool ModuleEditor::Init()
 {
+	LOG("Init editor gui with imgui lib version %s", ImGui::GetVersion());
+	frame_timer.Start();
+	ms_timer.Start();
+
 	return true;
 }
 
@@ -23,20 +28,46 @@ update_status ModuleEditor::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
+void ModuleEditor::FillBar(Timer &timer, const int &timer_check, vector<float> &container, float new_value)
+{
+	if (timer.Read() > timer_check)
+	{
+		timer.Start();
+
+		if (container.size() > 100)
+		{
+			for (int i = 1; i < container.size(); i++)
+				container[i - 1] = container[i];
+
+			container[container.size() - 1] = new_value;
+		}
+
+		else
+			container.push_back(new_value);
+	}
+}
+
 update_status ModuleEditor::Update(float dt)
 {
 	update_status ret = UPDATE_CONTINUE;
-	static float f = 0.0f;
-	ImGui::TextColored(RED, "PORFIN FUNCIONA ESTA MIERDA");
-	ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	FillBar(frame_timer, 1000, frames, App->GetFPS());
+	FillBar(ms_timer, 1, ms, App->GetFrameMs());
 
 	if (show_configuration)
 	{
-		ImGui::SetNextWindowSize(ImVec2(50, 50), ImGuiSetCond_FirstUseEver);
+		ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiSetCond_FirstUseEver);
 		ImGui::SetNextWindowPos(ImVec2(700, 60));
 		ImGui::Begin("Configuration", &show_configuration);
 		DrawApplication();
+		ImGui::End();
+	}
+
+	if (show_console)
+	{
+		ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiSetCond_FirstUseEver);
+		ImGui::SetNextWindowPos(ImVec2(700, 360));
+		ImGui::Begin("Console", &show_console);
+		DrawConsole();
 		ImGui::End();
 	}
 
@@ -61,6 +92,7 @@ update_status ModuleEditor::Update(float dt)
 			if (ImGui::BeginMenu("View"))
 			{
 				ImGui::MenuItem("Configuration", "4", &show_configuration);
+				ImGui::MenuItem("Console", "3", &show_console);
 				ImGui::EndMenu();
 			}
 
@@ -115,6 +147,10 @@ void ModuleEditor::DrawApplication()
 		ImGui::TextColored(YELLOW, "%i", App->GetFramerateLimit());
 
 		char title[25];
+		sprintf_s(title, 25, "Framerate %.1f", frames[frames.size() - 1]);
+		ImGui::PlotHistogram("##framerate", &frames[0], frames.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+		sprintf_s(title, 25, "Milliseconds %.1f", ms[ms.size() - 1]);
+		ImGui::PlotHistogram("##framerate", &ms[0], ms.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 	/*	sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
 		ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 		sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
@@ -150,6 +186,26 @@ void ModuleEditor::DrawApplication()
 		ImGui::Text("Total Alloc Unit Count: %u", stats.totalAllocUnitCount);
 		ImGui::Text("Peak Alloc Unit Count: %u", stats.peakAllocUnitCount);*/
 	}
+}
+
+void ModuleEditor::DrawConsole()
+{
+	/*ImGui::Begin("Console", &show_console, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoFocusOnAppearing);
+	ImGui::TextUnformatted(buf.begin());
+	if (scroll_to_bottom)
+		ImGui::SetScrollHere(1.0f);
+	scroll_to_bottom = false;
+	ImGui::End();*/
+}
+
+void ModuleEditor::Log(const char * entry)
+{
+	/*if (show_console)
+	{
+		buf.append(entry);
+		scroll_to_bottom = true;
+	}
+		*/
 }
 
 bool ModuleEditor::CleanUp()

@@ -39,6 +39,12 @@ Uint32 Timer::Read()
 	}
 }
 
+float Timer::ReadSec() const
+{
+	return float(SDL_GetTicks() - started_at) / 1000.0f;
+}
+
+
 bool Timer::SoundsTimer()
 {
 	if (SDL_GetTicks() / 1000 - memory == 1)
