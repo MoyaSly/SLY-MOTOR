@@ -36,8 +36,8 @@ private:
 private:
 	Timer frame_timer;
 	Timer ms_timer;
-	std::vector<float> ms;
-	std::vector<float> frames;
+	std::vector<float> ms_log;
+	std::vector<float> frames_log;
 	//ImGuiTextBuffer buf;
 	
 };

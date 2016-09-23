@@ -11,6 +11,13 @@ Application::Application()
 	physics = new ModulePhysics3D(this);
 	editor = new ModuleEditor(this);
 
+
+	frames = 0;
+	last_frame_ms = -1;
+	last_fps = -1;
+	ms = 1000 / 60;
+	fps_counter = 0;
+
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -70,32 +77,28 @@ bool Application::Init()
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
-	frame_count++;
-	last_frame_count++;
-
-	dt = (float)ms_timer.Read();
+	dt = (float)ms_timer.Read() / 1000;
 	ms_timer.Start();
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
-	if (SecCounter())
+	++frames;
+	++fps_counter;
+
+	if (fps_timer.Read() >= 1000)
 	{
-		frame_time.Start();
-		prev_frame_count = last_frame_count;
-		last_frame_count = 0;
+		last_fps = fps_counter;
+		fps_counter = 0;
+		fps_timer.Start();
 	}
 
-	last_frame_ms = frame_time.Read();
+	last_frame_ms = fps_timer.Read();
 
-
-	if (ms > 0 && last_frame_ms < ms)
-	{
-		PerfTimer t;
+	// cap fps
+	if (ms > 0 && (last_frame_ms < ms))
 		SDL_Delay(ms - last_frame_ms);
-		//LOG("We waited for %d milliseconds and got back in %f", capped_ms - last_frame_ms, t.ReadMs());
-	}
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
@@ -200,19 +203,4 @@ void Application::SetFramerateLimit(uint max_framerate)
 		ms = 1000 / max_framerate;
 	else
 		ms = 0;
-}
-
-int Application::GetFPS()
-{
-	return prev_frame_count;
-}
-
-int Application::GetFrameMs()
-{
-	return last_frame_ms;
-}
-
-bool Application::SecCounter()
-{
-	return (frame_time.Read() > 1000);
 }

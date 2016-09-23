@@ -50,8 +50,8 @@ void ModuleEditor::FillBar(Timer &timer, const int &timer_check, vector<float> &
 update_status ModuleEditor::Update(float dt)
 {
 	update_status ret = UPDATE_CONTINUE;
-	FillBar(frame_timer, 1000, frames, App->GetFPS());
-	FillBar(ms_timer, 1, ms, App->GetFrameMs());
+	FillBar(frame_timer, 100, frames_log, App->GetFramerateLimit());
+	FillBar(ms_timer, 1, ms_log, App->GetFramerateLimit());
 
 	if (show_configuration)
 	{
@@ -139,23 +139,20 @@ void ModuleEditor::DrawApplication()
 			App->SetOrganizationName(org_name);
 
 		int max_fps = App->GetFramerateLimit();
-		if (ImGui::SliderInt("Max FPS", &max_fps, 0, 120))
+		if (ImGui::SliderInt("Max FPS", &max_fps, 0, 125))
 			App->SetFramerateLimit(max_fps);
 
 		ImGui::Text("Limit Framerate:");
 		ImGui::SameLine();
 		ImGui::TextColored(YELLOW, "%i", App->GetFramerateLimit());
-
+		
 		char title[25];
-		sprintf_s(title, 25, "Framerate %.1f", frames[frames.size() - 1]);
-		ImGui::PlotHistogram("##framerate", &frames[0], frames.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
-		sprintf_s(title, 25, "Milliseconds %.1f", ms[ms.size() - 1]);
-		ImGui::PlotHistogram("##framerate", &ms[0], ms.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
-	/*	sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
-		ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
-		sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
-		ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
+		sprintf_s(title, 25, "Framerate %.1f", frames_log[frames_log.size() - 1]);
+		ImGui::PlotHistogram("##framerate", &frames_log[0], frames_log.size(), 0, title, 0.0f, 150.0f, ImVec2(310, 100));
+		sprintf_s(title, 25, "Milliseconds %.1f", ms_log[ms_log.size() - 1]);
+		ImGui::PlotHistogram("##framerate", &ms_log[0], ms_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 
+		/*
 		// Memory --------------------
 		sMStats stats = m_getMemoryStatistics();
 		static int speed = 0;
