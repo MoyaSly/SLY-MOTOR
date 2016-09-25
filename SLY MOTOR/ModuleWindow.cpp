@@ -21,6 +21,9 @@ bool ModuleWindow::Init()
 	LOG("Init SDL window & surface");
 	bool ret = true;
 
+	screen_width = SCREEN_WIDTH;
+	screen_height = SCREEN_HEIGHT;
+
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -28,9 +31,7 @@ bool ModuleWindow::Init()
 	}
 	else
 	{
-		//Create window
-		int width = SCREEN_WIDTH * SCREEN_SIZE;
-		int height = SCREEN_HEIGHT * SCREEN_SIZE;
+
 		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 		//Use OpenGL 2.1
@@ -52,7 +53,7 @@ bool ModuleWindow::Init()
 
 		SDL_DisplayMode current;
 		SDL_GetCurrentDisplayMode(0, &current);
-		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
+		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, flags);
 
 		if(window == NULL)
 		{
@@ -88,6 +89,50 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
+uint ModuleWindow::GetWidth() const
+{
+	return screen_width;
+}
+
+uint ModuleWindow::GetHeight() const
+{
+	return screen_height;
+}
+
+void ModuleWindow::SetWidth(uint width)
+{
+	screen_width = width;
+	OnResize(screen_width, screen_height);
+}
+
+void ModuleWindow::SetHeigth(uint height)
+{
+	screen_height = height;
+	OnResize(screen_width, screen_height);
+}
+
+void ModuleWindow::GetMaxMinSize(uint& min_w, uint& min_h, uint& max_w, uint& max_h) const
+{
+	min_w = 640;
+	min_h = 480;
+	max_w = 1920;
+	max_h = 1080;
+
+	SDL_DisplayMode dm;
+
+	if (SDL_GetDesktopDisplayMode(0, &dm) != 0)
+	{
+		LOG("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
+	}
+	else
+	{
+		max_w = dm.w;
+		max_h = dm.h;
+	}
+
+}
+
+
 void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
@@ -103,4 +148,14 @@ void ModuleWindow::SetBrightness(float set)
 	CAP(set);
 	if (SDL_SetWindowBrightness(window, set) != 0)
 		LOG("Could not change window brightness: %s\n", SDL_GetError());
+}
+
+SDL_Window * ModuleWindow::GetWindow() const
+{
+	return window;
+}
+
+void ModuleWindow::OnResize(int width, int height)
+{
+	SDL_SetWindowSize(window, width, height);
 }

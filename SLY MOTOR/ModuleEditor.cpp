@@ -21,6 +21,10 @@ bool ModuleEditor::Init()
 	frame_timer.Start();
 	ms_timer.Start();
 
+	App->window->GetMaxMinSize(min_w, min_h, max_w, max_h);
+	w = App->window->GetWidth();
+	h = App->window->GetHeight();
+
 	return true;
 }
 
@@ -129,14 +133,17 @@ void ModuleEditor::DrawConfiguration()
 {
 	if (ImGui::CollapsingHeader("Application"))
 	{
+		// APP NAME
 		static char app_name[120];
 		strcpy_s(app_name, 120, App->GetAppName());
 		if (ImGui::InputText("App Name", app_name, 120, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll));
 
+		// ORG NAME
 		static char org_name[120];
 		strcpy_s(org_name, 120, App->GetOrgName());
 		if (ImGui::InputText("Organization", org_name, 120, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll));
 
+		// MAX FPS
 		int max_fps = App->GetFramerateLimit();
 		if (ImGui::SliderInt("Max FPS", &max_fps, 0, 125))
 			App->SetFramerateLimit(max_fps);
@@ -146,17 +153,29 @@ void ModuleEditor::DrawConfiguration()
 		ImGui::TextColored(YELLOW, "%i", App->GetFramerateLimit());
 		
 		char title[25];
+
+		// GRAPH FRAMERATE
 		sprintf_s(title, 25, "Framerate %.1f", frames_log[frames_log.size() - 1]);
 		ImGui::PlotHistogram("##framerate", &frames_log[0], frames_log.size(), 0, title, 0.0f, 150.0f, ImVec2(310, 100));
+
+		// GRAPH MILLISECONDS
 		sprintf_s(title, 25, "Milliseconds %.1f", ms_log[ms_log.size() - 1]);
 		ImGui::PlotHistogram("##framerate", &ms_log[0], ms_log.size(), 0, title, 0.0f, 50.0f, ImVec2(310, 100));
 	}
 
 	if (ImGui::CollapsingHeader("Window"))
 	{
+		//BRIGHTNESS
 		float brightness = App->window->GetBrightness();
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f))
 			App->window->SetBrightness(brightness);
+
+		//WIDTH HEIGHT
+		if (ImGui::SliderInt("Width", (int*)&w, min_w, max_w))
+			App->window->SetWidth(w);
+
+		if (ImGui::SliderInt("Height", (int*)&h, min_h, max_h))
+			App->window->SetHeigth(h);
 	}
 }
 
@@ -179,6 +198,7 @@ void ModuleEditor::Log(const char * entry)
 	}
 		*/
 }
+
 
 bool ModuleEditor::CleanUp()
 {
