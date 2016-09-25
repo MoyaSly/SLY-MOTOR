@@ -43,7 +43,6 @@ bool ModuleWindow::Init()
 
 		if(WIN_RESIZABLE == true)
 			flags |= SDL_WINDOW_RESIZABLE;
-		
 
 		if(WIN_BORDERLESS == true)
 			flags |= SDL_WINDOW_BORDERLESS;
@@ -158,4 +157,78 @@ SDL_Window * ModuleWindow::GetWindow() const
 void ModuleWindow::OnResize(int width, int height)
 {
 	SDL_SetWindowSize(window, width, height);
+}
+
+bool ModuleWindow::IsFullscreen() const
+{
+	return fullscreen;
+}
+
+bool ModuleWindow::IsResizable() const
+{
+	return resizable;
+}
+
+bool ModuleWindow::IsBorderless() const
+{
+	return borderless;
+}
+
+bool ModuleWindow::IsFullscreenDesktop() const
+{
+	return fullscreen_desktop;
+}
+
+void ModuleWindow::SetFullscreen(bool set)
+{
+	if (set != fullscreen)
+	{
+		fullscreen = set;
+		if (fullscreen == true)
+		{
+			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) != 0)
+				LOG("Could not switch to fullscreen: %s\n", SDL_GetError());
+			fullscreen_desktop = false;
+			SDL_Log("this is a test");
+		}
+		else
+		{
+			if (SDL_SetWindowFullscreen(window, 0) != 0)
+				LOG("Could not switch to windowed: %s\n", SDL_GetError());
+		}
+	}
+}
+
+void ModuleWindow::SetResizable(bool set)
+{
+	// cannot be changed while the program is running, but we can save the change
+	resizable = set;
+}
+
+void ModuleWindow::SetBorderless(bool set)
+{
+	if (set != borderless && fullscreen == false && fullscreen_desktop == false)
+	{
+		borderless = set;
+		SDL_SetWindowBordered(window, (SDL_bool)!borderless);
+	}
+}
+
+void ModuleWindow::SetFullScreenDesktop(bool set)
+{
+	if (set != fullscreen_desktop)
+	{
+		fullscreen_desktop = set;
+		if (fullscreen_desktop == true)
+		{
+			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP) != 0)
+				LOG("Could not switch to fullscreen desktop: %s\n", SDL_GetError());
+			fullscreen = false;
+		}
+		else
+		{
+			if (SDL_SetWindowFullscreen(window, 0) != 0)
+				LOG("Could not switch to windowed: %s\n", SDL_GetError());
+		}
+	}
 }

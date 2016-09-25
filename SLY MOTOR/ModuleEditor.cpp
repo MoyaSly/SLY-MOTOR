@@ -176,6 +176,34 @@ void ModuleEditor::DrawConfiguration()
 
 		if (ImGui::SliderInt("Height", (int*)&h, min_h, max_h))
 			App->window->SetHeigth(h);
+
+		bool fullscreen = App->window->IsFullscreen();
+		bool resizable = App->window->IsResizable();
+		bool borderless = App->window->IsBorderless();
+		bool full_desktop = App->window->IsFullscreenDesktop();
+		
+		//FULLSCREEN
+		if (ImGui::Checkbox("Fullscreen", &fullscreen))
+			App->window->SetFullscreen(fullscreen);
+
+		ImGui::SameLine();
+
+		//RESIZABLE
+		if (ImGui::Checkbox("Resizable", &resizable))
+			App->window->SetResizable(resizable);
+
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Restart to apply");
+
+		//BORDERLESS
+		if (ImGui::Checkbox("Borderless", &borderless))
+			App->window->SetBorderless(borderless);
+
+		ImGui::SameLine();
+
+		//FULL DESKTOP
+		if (ImGui::Checkbox("Full Desktop", &full_desktop))
+			App->window->SetFullScreenDesktop(full_desktop);
 	}
 }
 
