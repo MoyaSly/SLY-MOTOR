@@ -6,8 +6,9 @@
 #include "Glew\include\glew.h"
 #include "Imgui/imgui.h"
 
-ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled), frames_log(100), ms_log(100)
 {
+	
 }
 
 ModuleEditor::~ModuleEditor()
@@ -50,8 +51,8 @@ void ModuleEditor::FillBar(Timer &timer, const int &timer_check, vector<float> &
 update_status ModuleEditor::Update(float dt)
 {
 	update_status ret = UPDATE_CONTINUE;
-	FillBar(frame_timer, 100, frames_log, App->GetFramerateLimit());
-	FillBar(ms_timer, 1, ms_log, App->GetFramerateLimit());
+	FillBar(frame_timer, 1000, frames_log, App->GetFramerateLimit());
+	FillBar(ms_timer, 1, ms_log, App->GetFrameMs());
 
 	if (show_configuration)
 	{
@@ -128,15 +129,14 @@ void ModuleEditor::DrawApplication()
 {
 	if (ImGui::CollapsingHeader("Application"))
 	{
+
 		static char app_name[120];
 		strcpy_s(app_name, 120, App->GetAppName());
-		if (ImGui::InputText("App Name", app_name, 120, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
-			App->SetAppName(app_name);
+		if (ImGui::InputText("App Name", app_name, 120, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll));
 
 		static char org_name[120];
-		strcpy_s(org_name, 120, App->GetOrganizationName());
-		if (ImGui::InputText("Organization", org_name, 120, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
-			App->SetOrganizationName(org_name);
+		strcpy_s(org_name, 120, App->GetOrgName());
+		if (ImGui::InputText("Organization", org_name, 120, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll));
 
 		int max_fps = App->GetFramerateLimit();
 		if (ImGui::SliderInt("Max FPS", &max_fps, 0, 125))

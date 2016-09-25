@@ -94,7 +94,7 @@ void Application::FinishUpdate()
 		fps_timer.Start();
 	}
 
-	last_frame_ms = fps_timer.Read();
+	last_frame_ms = ms_timer.Read();
 
 	// cap fps
 	if (ms > 0 && (last_frame_ms < ms))
@@ -164,29 +164,10 @@ const char* Application::GetAppName() const
 }
 
 // ---------------------------------------------
-void Application::SetAppName(const char * name)
-{
-	if (name != nullptr && name != app_name)
-	{
-		app_name = name;
-		window->SetTitle(name);
-	}
-}
-
-// ---------------------------------------------
-const char* Application::GetOrganizationName() const
+const char* Application::GetOrgName() const
 {
 	return org_name.c_str();
 }
-
-void Application::SetOrganizationName(const char * name)
-{
-	if (name != nullptr && name != org_name)
-	{
-		org_name = name;
-	}
-}
-
 // ---------------------------------------------
 uint Application::GetFramerateLimit() const
 {
@@ -204,3 +185,9 @@ void Application::SetFramerateLimit(uint max_framerate)
 	else
 		ms = 0;
 }
+
+int Application::GetFrameMs()
+{
+	return last_frame_ms;
+}
+

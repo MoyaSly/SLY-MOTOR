@@ -53,11 +53,10 @@ public:
 	bool CleanUp();
 	void RequestBrowser(const char* url) const;
 	const char* GetAppName() const;
-	void SetAppName(const char* name);
-	const char* GetOrganizationName() const;
-	void SetOrganizationName(const char* name);
+	const char* GetOrgName() const;
 	uint GetFramerateLimit() const;
 	void SetFramerateLimit(uint max_framerate);
+	int GetFrameMs();
 
 
 private:
