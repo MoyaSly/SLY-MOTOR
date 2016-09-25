@@ -20,6 +20,9 @@ public:
 
 	void SetTitle(const char* title);
 
+	float GetBrightness() const;
+	void SetBrightness(float set);
+
 public:
 	//The window we'll be rendering to
 	SDL_Window* window;

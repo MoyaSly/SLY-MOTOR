@@ -59,7 +59,7 @@ update_status ModuleEditor::Update(float dt)
 		ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiSetCond_FirstUseEver);
 		ImGui::SetNextWindowPos(ImVec2(700, 60));
 		ImGui::Begin("Configuration", &show_configuration);
-		DrawApplication();
+		DrawConfiguration();
 		ImGui::End();
 	}
 
@@ -125,11 +125,10 @@ update_status ModuleEditor::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-void ModuleEditor::DrawApplication()
+void ModuleEditor::DrawConfiguration()
 {
 	if (ImGui::CollapsingHeader("Application"))
 	{
-
 		static char app_name[120];
 		strcpy_s(app_name, 120, App->GetAppName());
 		if (ImGui::InputText("App Name", app_name, 120, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll));
@@ -150,38 +149,14 @@ void ModuleEditor::DrawApplication()
 		sprintf_s(title, 25, "Framerate %.1f", frames_log[frames_log.size() - 1]);
 		ImGui::PlotHistogram("##framerate", &frames_log[0], frames_log.size(), 0, title, 0.0f, 150.0f, ImVec2(310, 100));
 		sprintf_s(title, 25, "Milliseconds %.1f", ms_log[ms_log.size() - 1]);
-		ImGui::PlotHistogram("##framerate", &ms_log[0], ms_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+		ImGui::PlotHistogram("##framerate", &ms_log[0], ms_log.size(), 0, title, 0.0f, 50.0f, ImVec2(310, 100));
+	}
 
-		/*
-		// Memory --------------------
-		sMStats stats = m_getMemoryStatistics();
-		static int speed = 0;
-		static vector<float> memory(100);
-		if (++speed > 20)
-		{
-			speed = 0;
-			if (memory.size() == 100)
-			{
-				for (uint i = 0; i < 100 - 1; ++i)
-					memory[i] = memory[i + 1];
-
-				memory[100 - 1] = (float)stats.totalReportedMemory;
-			}
-			else
-				memory.push_back((float)stats.totalReportedMemory);
-		}
-
-		ImGui::PlotHistogram("##memory", &memory[0], memory.size(), 0, "Memory Consumption", 0.0f, (float)stats.peakReportedMemory * 1.2f, ImVec2(310, 100));
-
-		ImGui::Text("Total Reported Mem: %u", stats.totalReportedMemory);
-		ImGui::Text("Total Actual Mem: %u", stats.totalActualMemory);
-		ImGui::Text("Peak Reported Mem: %u", stats.peakReportedMemory);
-		ImGui::Text("Peak Actual Mem: %u", stats.peakActualMemory);
-		ImGui::Text("Accumulated Reported Mem: %u", stats.accumulatedReportedMemory);
-		ImGui::Text("Accumulated Actual Mem: %u", stats.accumulatedActualMemory);
-		ImGui::Text("Accumulated Alloc Unit Count: %u", stats.accumulatedAllocUnitCount);
-		ImGui::Text("Total Alloc Unit Count: %u", stats.totalAllocUnitCount);
-		ImGui::Text("Peak Alloc Unit Count: %u", stats.peakAllocUnitCount);*/
+	if (ImGui::CollapsingHeader("Window"))
+	{
+		float brightness = App->window->GetBrightness();
+		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f))
+			App->window->SetBrightness(brightness);
 	}
 }
 

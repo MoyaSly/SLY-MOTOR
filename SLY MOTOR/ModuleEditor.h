@@ -19,7 +19,7 @@ public:
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
-	void DrawApplication();
+	void DrawConfiguration();
 	void DrawConsole();
 	void Log(const char* entry);
 	bool CleanUp();

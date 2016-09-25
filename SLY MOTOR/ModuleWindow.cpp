@@ -93,3 +93,14 @@ void ModuleWindow::SetTitle(const char* title)
 	SDL_SetWindowTitle(window, title);
 }
 
+float ModuleWindow::GetBrightness() const
+{
+	return SDL_GetWindowBrightness(window);
+}
+
+void ModuleWindow::SetBrightness(float set)
+{
+	CAP(set);
+	if (SDL_SetWindowBrightness(window, set) != 0)
+		LOG("Could not change window brightness: %s\n", SDL_GetError());
+}
