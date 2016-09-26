@@ -41,6 +41,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	float z = 0.5f;
 
 	glBegin(GL_TRIANGLES);
+	glColor3f(10.f, 0.f, 0.f);
 
 	//CARA +Z
 	glNormal3f(0.0f, 0.0f, 0.0f);
