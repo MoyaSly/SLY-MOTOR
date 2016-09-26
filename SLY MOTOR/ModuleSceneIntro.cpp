@@ -3,6 +3,12 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
+#include "glut/glut.h"
+
+#pragma comment (lib, "glut/glut32.lib")
+
 
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -30,5 +36,78 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	float x = 0.5f;
+	float y = 0.5f;
+	float z = 0.5f;
+
+	glBegin(GL_TRIANGLES);
+
+	//CARA +Z
+	glNormal3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(-x, -y, z);
+	glVertex3f(x, -y, z);
+	glVertex3f(x, y, z);
+
+	glNormal3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(-x, -y, z);
+	glVertex3f(x, y, z);
+	glVertex3f(-x, y, z);
+
+	//CARA -Z
+	glNormal3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(x, y, -z);
+	glVertex3f(x, -y, -z);
+	glVertex3f(-x, -y, -z);
+
+	glNormal3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(-x, y, -z);
+	glVertex3f(x, y, -z);
+	glVertex3f(-x, -y, -z);
+
+	//CARA -Y
+	glNormal3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(-x, -y, z);
+	glVertex3f(-x, -y, -z);
+	glVertex3f(x, -y, -z);
+
+	glNormal3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(x, -y, -z);
+	glVertex3f(x, -y, z);
+	glVertex3f(-x, -y, z);
+
+	//CARA +Y
+	glNormal3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(-x, y, z);
+	glVertex3f(x, y, z);
+	glVertex3f(x, y, -z);
+
+	glNormal3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(x, y, -z);
+	glVertex3f(-x, y, -z);
+	glVertex3f(-x, y, z);
+
+	//CARA +X
+	glNormal3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(x, y, z);
+	glVertex3f(x, -y, z);
+	glVertex3f(x, -y, -z);
+
+	glNormal3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(x, y, -z);
+	glVertex3f(x, y, z);
+	glVertex3f(x, -y, -z);
+
+	//CARA -X
+	glNormal3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(-x, -y, -z);
+	glVertex3f(-x, -y, z);
+	glVertex3f(-x, y, z);
+
+	glNormal3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(-x, -y, -z);
+	glVertex3f(-x, y, z);
+	glVertex3f(-x, y, -z);
+
+	glEnd();
 	return UPDATE_CONTINUE;
 }
