@@ -149,9 +149,9 @@ void ModuleEditor::DrawConfiguration()
 		if (ImGui::SliderInt("Max FPS", &max_fps, 0, 125))
 			App->SetFramerateLimit(max_fps);
 
-		ImGui::Text("Limit Framerate:");
+		ImGui::TextColored(YELLOW, "Limit Framerate:");
 		ImGui::SameLine();
-		ImGui::TextColored(YELLOW, "%i", App->GetFramerateLimit());
+		ImGui::TextColored(BLUE, "%i", App->GetFramerateLimit());
 		
 		char title[25];
 
@@ -210,13 +210,13 @@ void ModuleEditor::DrawConfiguration()
 	//HARDWARE OP
 	if (ImGui::CollapsingHeader("Hardware"))
 	{
-		ImGui::Text("Num CPUs: ");
-		ImGui::SameLine(); ImGui::TextColored(YELLOW, "%d (Cache: %dkb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
+		ImGui::TextColored(YELLOW, "Num CPUs: ");
+		ImGui::SameLine(); ImGui::TextColored(BLUE, "%d (Cache: %dkb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
 
-		ImGui::Text("Mem RAM: ");
-		ImGui::SameLine(); ImGui::TextColored(YELLOW, "%.2fGb", (float)SDL_GetSystemRAM() / 1024);
+		ImGui::TextColored(YELLOW, "Mem RAM: ");
+		ImGui::SameLine(); ImGui::TextColored(BLUE, "%.2fGb", (float)SDL_GetSystemRAM() / 1024);
 
-		ImGui::Text("Caps: ");
+		ImGui::TextColored(YELLOW, "Caps: ");
 		ImGui::SameLine();
 		string tmp;
 
@@ -231,7 +231,7 @@ void ModuleEditor::DrawConfiguration()
 		if (SDL_HasSSE41) tmp += "SSE41, ";
 		if (SDL_HasSSE42) tmp += "SSE42, ";
 
-		ImGui::TextColored(YELLOW, tmp.c_str());
+		ImGui::TextColored(BLUE, tmp.c_str());
 
 		uint vendor, device_id;
 		std::wstring brand;
@@ -250,20 +250,20 @@ void ModuleEditor::DrawConfiguration()
 			float vram_mb_available = float(video_mem_available) / (1024.f * 1024.f * 1024.f);
 			float vram_mb_reserved = float(video_mem_reserved) / (1024.f * 1024.f * 1024.f);
 
-			ImGui::Text("GPU Brand");
-			ImGui::SameLine(); ImGui::TextColored(YELLOW, gpu_brand.c_str());
-			ImGui::Text("GPU Vendor");
-			ImGui::SameLine(); ImGui::TextColored(YELLOW, "%d", gpu_device);
-			ImGui::Text("GPU Device Id");
-			ImGui::SameLine(); ImGui::TextColored(YELLOW, "%d", device_id);
-			ImGui::Text("VRAM Budget");
-			ImGui::SameLine(); ImGui::TextColored(YELLOW, "%.2fMb", vram_mb_budget* 1024.f);
-			ImGui::Text("VRAM Usage");
-			ImGui::SameLine(); ImGui::TextColored(YELLOW, "%.2fMb", vram_mb_usage* 1024.f);
-			ImGui::Text("VRAM Aviable");
-			ImGui::SameLine(); ImGui::TextColored(YELLOW, "%.2fMb", vram_mb_available* 1024.f);
-			ImGui::Text("VRAM Reserved");
-			ImGui::SameLine(); ImGui::TextColored(YELLOW, "%.2fMb", vram_mb_reserved* 1024.f);
+			ImGui::TextColored(YELLOW, "GPU Brand");
+			ImGui::SameLine(); ImGui::TextColored(BLUE, gpu_brand.c_str());
+			ImGui::TextColored(YELLOW, "GPU Vendor");
+			ImGui::SameLine(); ImGui::TextColored(BLUE, "%d", gpu_device);
+			ImGui::TextColored(YELLOW, "GPU Device Id");
+			ImGui::SameLine(); ImGui::TextColored(BLUE, "%d", device_id);
+			ImGui::TextColored(YELLOW, "VRAM Budget");
+			ImGui::SameLine(); ImGui::TextColored(BLUE, "%.2fMb", vram_mb_budget* 1024.f);
+			ImGui::TextColored(YELLOW, "VRAM Usage");
+			ImGui::SameLine(); ImGui::TextColored(BLUE, "%.2fMb", vram_mb_usage* 1024.f);
+			ImGui::TextColored(YELLOW, "VRAM Aviable");
+			ImGui::SameLine(); ImGui::TextColored(BLUE, "%.2fMb", vram_mb_available* 1024.f);
+			ImGui::TextColored(YELLOW, "VRAM Reserved");
+			ImGui::SameLine(); ImGui::TextColored(BLUE, "%.2fMb", vram_mb_reserved* 1024.f);
 		}
 	}
 }
