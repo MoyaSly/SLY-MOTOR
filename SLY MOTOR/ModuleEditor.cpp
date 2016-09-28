@@ -5,6 +5,7 @@
 #include "imgui\imgui_impl_sdl_gl3.h"
 #include "Glew\include\glew.h"
 #include "Imgui/imgui.h"
+#include "gpudetect/DeviceId.h"
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled), frames_log(100), ms_log(100)
 {
@@ -204,6 +205,66 @@ void ModuleEditor::DrawConfiguration()
 		//FULL DESKTOP
 		if (ImGui::Checkbox("Full Desktop", &full_desktop))
 			App->window->SetFullScreenDesktop(full_desktop);
+	}
+
+	//HARDWARE OP
+	if (ImGui::CollapsingHeader("Hardware"))
+	{
+		ImGui::Text("Num CPUs: ");
+		ImGui::SameLine(); ImGui::TextColored(YELLOW, "%d (Cache: %dkb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
+
+		ImGui::Text("Mem RAM: ");
+		ImGui::SameLine(); ImGui::TextColored(YELLOW, "%.2fGb", (float)SDL_GetSystemRAM() / 1024);
+
+		ImGui::Text("Caps: ");
+		ImGui::SameLine();
+		string tmp;
+
+		if (SDL_Has3DNow) tmp += "3DNow, ";
+		if (SDL_HasAVX) tmp += "AVX, ";
+		if (SDL_HasAltiVec) tmp += "AltiVec, ";
+		if (SDL_HasMMX) tmp += "MMX, ";
+		if (SDL_HasRDTSC) tmp += "RDTSC, ";
+		if (SDL_HasSSE) tmp += "SSE, ";
+		if (SDL_HasSSE2) tmp += "SSE2, ";
+		if (SDL_HasSSE3) tmp += "SSE3, ";
+		if (SDL_HasSSE41) tmp += "SSE41, ";
+		if (SDL_HasSSE42) tmp += "SSE42, ";
+
+		ImGui::TextColored(YELLOW, tmp.c_str());
+
+		uint vendor, device_id;
+		std::wstring brand;
+		unsigned __int64 video_mem_budget;
+		unsigned __int64 video_mem_usage;
+		unsigned __int64 video_mem_available;
+		unsigned __int64 video_mem_reserved;
+
+		if (getGraphicsDeviceInfo(&vendor, &device_id, &brand, &video_mem_budget, &video_mem_usage, &video_mem_available, &video_mem_reserved))
+		{
+			uint gpu_vendor = vendor;
+			uint gpu_device = device_id;
+			std::string gpu_brand(brand.begin(), brand.end());
+			float vram_mb_budget = float(video_mem_budget) / 1073741824.0f;
+			float vram_mb_usage = float(video_mem_usage) / (1024.f * 1024.f * 1024.f);
+			float vram_mb_available = float(video_mem_available) / (1024.f * 1024.f * 1024.f);
+			float vram_mb_reserved = float(video_mem_reserved) / (1024.f * 1024.f * 1024.f);
+
+			ImGui::Text("GPU Brand");
+			ImGui::SameLine(); ImGui::TextColored(YELLOW, gpu_brand.c_str());
+			ImGui::Text("GPU Vendor");
+			ImGui::SameLine(); ImGui::TextColored(YELLOW, "%d", gpu_device);
+			ImGui::Text("GPU Device Id");
+			ImGui::SameLine(); ImGui::TextColored(YELLOW, "%d", device_id);
+			ImGui::Text("VRAM Budget");
+			ImGui::SameLine(); ImGui::TextColored(YELLOW, "%.2fMb", vram_mb_budget* 1024.f);
+			ImGui::Text("VRAM Usage");
+			ImGui::SameLine(); ImGui::TextColored(YELLOW, "%.2fMb", vram_mb_usage* 1024.f);
+			ImGui::Text("VRAM Aviable");
+			ImGui::SameLine(); ImGui::TextColored(YELLOW, "%.2fMb", vram_mb_available* 1024.f);
+			ImGui::Text("VRAM Reserved");
+			ImGui::SameLine(); ImGui::TextColored(YELLOW, "%.2fMb", vram_mb_reserved* 1024.f);
+		}
 	}
 }
 
