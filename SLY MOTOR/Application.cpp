@@ -10,6 +10,7 @@ Application::Application()
 	camera = new ModuleCamera3D(this);
 	physics = new ModulePhysics3D(this);
 	editor = new ModuleEditor(this);
+//	scene_loader = new ModuleSceneLoader(this);
 
 
 	frames = 0;
@@ -32,6 +33,7 @@ Application::Application()
 	// Scenes
 	AddModule(scene_intro);
 	AddModule(editor);
+//	AddModule(scene_loader);
 
 	// Renderer last!
 	AddModule(renderer3D);

@@ -249,6 +249,9 @@
     <ClInclude Include="gpudetect\dxgi1_4.h">
       <Filter>Sources\ExternLibs\gpudetect</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleSceneLoader.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -319,6 +322,9 @@
     </ClCompile>
     <ClCompile Include="gpudetect\DeviceId.cpp">
       <Filter>Sources\ExternLibs\gpudetect</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSceneLoader.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
