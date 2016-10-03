@@ -8,6 +8,8 @@
 
 #define MAX_LIGHTS 8
 
+struct Geometry;
+
 class ModuleRenderer3D : public Module
 {
 public:
@@ -16,10 +18,13 @@ public:
 
 	bool Init();
 	update_status PreUpdate(float dt);
+	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
 	void OnResize(int width, int height);
+	bool LoadGeometryBuffer(const Geometry *geometry);
+	void DrawMesh(const Geometry *geometry);
 
 public:
 

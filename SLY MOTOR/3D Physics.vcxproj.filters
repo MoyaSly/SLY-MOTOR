@@ -267,6 +267,9 @@
     <ClInclude Include="Bass\include\bassenc_ogg.h">
       <Filter>Sources\ExternLibs\Bass</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>Sources\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">

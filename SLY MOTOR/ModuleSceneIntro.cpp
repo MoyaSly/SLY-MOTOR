@@ -21,7 +21,7 @@ ModuleSceneIntro::~ModuleSceneIntro()
 // Load assets
 bool ModuleSceneIntro::Start()
 {
-	LOG("Loading Intro assets");
+	LOG_ME("Loading Intro assets");
 	return true;
 
 }
@@ -29,14 +29,14 @@ bool ModuleSceneIntro::Start()
 // Load assets
 bool ModuleSceneIntro::CleanUp()
 {
-	LOG("Unloading Intro scene");
+	LOG_ME("Unloading Intro scene");
 	return true;
 }
 
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	float x = 0.5f;
+	/*float x = 0.5f;
 	float y = 0.5f;
 	float z = 0.5f;
 
@@ -109,6 +109,6 @@ update_status ModuleSceneIntro::Update(float dt)
 	glVertex3f(-x, y, z);
 	glVertex3f(-x, y, -z);
 
-	glEnd();
+	glEnd();*/
 	return UPDATE_CONTINUE;
 }

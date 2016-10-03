@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "Geometry.h"
 #include "Glew\include\glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
@@ -24,27 +25,27 @@ ModuleRenderer3D::~ModuleRenderer3D()
 // Called before render is available
 bool ModuleRenderer3D::Init()
 {
-	LOG("Creating 3D Renderer context");
+	LOG_ME("Creating 3D Renderer context");
 	bool ret = true;
 	
 	//Create context
 	context = SDL_GL_CreateContext(App->window->GetWindow());
 	if(context == NULL)
 	{
-		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		LOG_ME("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 
 	GLenum gl_enum = glewInit();
 
 	if (gl_enum != GLEW_OK)
-		LOG("Glew hasn't been initialized!");
+		LOG_ME("Glew hasn't been initialized!");
 	
 	if(ret == true)
 	{
 		//Use Vsync
 		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
-			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+			LOG_ME("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
@@ -54,7 +55,7 @@ bool ModuleRenderer3D::Init()
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG_ME("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -66,7 +67,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG_ME("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 		
@@ -80,7 +81,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG_ME("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 		
@@ -132,6 +133,15 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
+update_status ModuleRenderer3D::Update(float dt)
+{
+	for (int i = 0; i < App->scene_loader->geo.size(); ++i)
+	{
+		DrawMesh(App->scene_loader->geo[i]);
+	}
+	return UPDATE_CONTINUE;
+}
+
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
@@ -146,7 +156,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 // Called before quitting
 bool ModuleRenderer3D::CleanUp()
 {
-	LOG("Destroying 3D Renderer");
+	LOG_ME("Destroying 3D Renderer");
 
 	SDL_GL_DeleteContext(context);
 
@@ -165,4 +175,65 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+bool ModuleRenderer3D::LoadGeometryBuffer(const Geometry *geometry)
+{
+	bool ret = true;
+
+	// Vertices
+	glGenBuffers(1, (GLuint*) &(geometry->id_vertices));
+	if (geometry->id_vertices == 0)
+	{
+		ret = false;
+	}
+	else
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, geometry->id_vertices);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * geometry->num_vertices * 3, geometry->vertices, GL_STATIC_DRAW);
+	}
+
+	// Normals
+	glGenBuffers(1, (GLuint*) &(geometry->id_normals));
+	if (geometry->id_normals == 0)
+	{
+		ret = false;
+	}
+	else
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, geometry->id_normals);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * geometry->num_normals * 3, geometry->normals, GL_STATIC_DRAW);
+	}
+
+	// Indices
+	glGenBuffers(1, (GLuint*) &(geometry->id_indices));
+	if (geometry->id_indices == 0)
+	{
+		ret = false;
+	}
+	else
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometry->id_indices);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*geometry->num_indices, geometry->indices, GL_STATIC_DRAW);
+	}
+
+	return ret;
+}
+
+void ModuleRenderer3D::DrawMesh(const Geometry *geo)
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+
+	glBindBuffer(GL_ARRAY_BUFFER, geo->id_vertices);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, geo->id_normals);
+	glNormalPointer(GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geo->id_indices);
+	glDrawElements(GL_TRIANGLES, geo->num_indices, GL_UNSIGNED_INT, NULL);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
 }

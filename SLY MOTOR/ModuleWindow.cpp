@@ -18,7 +18,7 @@ ModuleWindow::~ModuleWindow()
 // Called before render is available
 bool ModuleWindow::Init()
 {
-	LOG("Init SDL window & surface");
+	LOG_ME("Init SDL window & surface");
 	bool ret = true;
 
 	screen_width = SCREEN_WIDTH;
@@ -26,7 +26,7 @@ bool ModuleWindow::Init()
 
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
+		LOG_ME("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 	else
@@ -56,7 +56,7 @@ bool ModuleWindow::Init()
 
 		if(window == NULL)
 		{
-			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			LOG_ME("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			ret = false;
 		}
 		else
@@ -75,7 +75,7 @@ bool ModuleWindow::Init()
 // Called before quitting
 bool ModuleWindow::CleanUp()
 {
-	LOG("Destroying SDL window and quitting all SDL systems");
+	LOG_ME("Destroying SDL window and quitting all SDL systems");
 
 	//Destroy window
 	if(window != NULL)
@@ -121,7 +121,7 @@ void ModuleWindow::GetMaxMinSize(uint& min_w, uint& min_h, uint& max_w, uint& ma
 
 	if (SDL_GetDesktopDisplayMode(0, &dm) != 0)
 	{
-		LOG("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
+		LOG_ME("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
 	}
 	else
 	{
@@ -146,7 +146,7 @@ void ModuleWindow::SetBrightness(float set)
 {
 	CAP(set);
 	if (SDL_SetWindowBrightness(window, set) != 0)
-		LOG("Could not change window brightness: %s\n", SDL_GetError());
+		LOG_ME("Could not change window brightness: %s\n", SDL_GetError());
 }
 
 SDL_Window * ModuleWindow::GetWindow() const
@@ -187,14 +187,14 @@ void ModuleWindow::SetFullscreen(bool set)
 		if (fullscreen == true)
 		{
 			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) != 0)
-				LOG("Could not switch to fullscreen: %s\n", SDL_GetError());
+				LOG_ME("Could not switch to fullscreen: %s\n", SDL_GetError());
 			fullscreen_desktop = false;
 			SDL_Log("this is a test");
 		}
 		else
 		{
 			if (SDL_SetWindowFullscreen(window, 0) != 0)
-				LOG("Could not switch to windowed: %s\n", SDL_GetError());
+				LOG_ME("Could not switch to windowed: %s\n", SDL_GetError());
 		}
 	}
 }
@@ -222,13 +222,13 @@ void ModuleWindow::SetFullScreenDesktop(bool set)
 		if (fullscreen_desktop == true)
 		{
 			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP) != 0)
-				LOG("Could not switch to fullscreen desktop: %s\n", SDL_GetError());
+				LOG_ME("Could not switch to fullscreen desktop: %s\n", SDL_GetError());
 			fullscreen = false;
 		}
 		else
 		{
 			if (SDL_SetWindowFullscreen(window, 0) != 0)
-				LOG("Could not switch to windowed: %s\n", SDL_GetError());
+				LOG_ME("Could not switch to windowed: %s\n", SDL_GetError());
 		}
 	}
 }

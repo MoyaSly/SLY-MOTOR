@@ -18,7 +18,7 @@ ModuleEditor::~ModuleEditor()
 
 bool ModuleEditor::Init()
 {
-	LOG("Init editor gui with imgui lib version %s", ImGui::GetVersion());
+	LOG_ME("Init editor gui with imgui lib version %s", ImGui::GetVersion());
 	frame_timer.Start();
 	ms_timer.Start();
 

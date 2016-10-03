@@ -1,8 +1,11 @@
-#pragma once
+
 #include <windows.h>
 #include <stdio.h>
 
-#define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
+#ifndef __Gobals_H__
+#define __Gobals_H__
+
+#define LOG_ME(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 
 void log(const char file[], int line, const char* format, ...);
 
@@ -71,3 +74,5 @@ enum update_status
 #define LIBRARY_BONE_FOLDER "/Library/Bones/"
 #define LIBRARY_ANIMATION_FOLDER "/Library/Animations/"
 #define LIBRARY_SCENE_FOLDER "/Library/Scenes/"
+
+#endif

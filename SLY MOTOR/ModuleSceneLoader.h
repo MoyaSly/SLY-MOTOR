@@ -1,11 +1,11 @@
 #ifndef __ModuleSceneLoader_H__
 #define __ModuleSceneLoader_H__
 
-#include <string>
-#include <map>
 #include "Module.h"
-#include "Math.h"
+#include "MathGeoLib\MathGeoLib.h"
 
+
+struct Geometry;
 
 class ModuleSceneLoader : public Module
 {
@@ -16,17 +16,16 @@ public:
 
 	bool Init();
 	bool Start();
+	update_status PreUpdate(float dt);
+	update_status Update(float dt);
+	update_status PostUpdate(float dt);
 	bool CleanUp();
-	void LoadFile(const char* file);
+
+	std::vector<const Geometry*> geo;
 
 private:
 
-	uint id_vertices = 0; // id in VRAM
-	uint num_indices = 0;
-	uint* indices = nullptr;
-	uint id_indices = 0; // id in VRAM
-	uint num_vertices = 0;
-	float* vertices = nullptr;
+	void LoadFile(const char *file);
 
 };
 

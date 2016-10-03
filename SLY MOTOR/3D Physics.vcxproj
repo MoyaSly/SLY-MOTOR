@@ -129,6 +129,7 @@
     <ClInclude Include="MathGeoLib\MathBuildConfig.h" />
     <ClInclude Include="MathGeoLib\MathGeoLib.h" />
     <ClInclude Include="MathGeoLib\MathGeoLibFwd.h" />
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="ModuleCamera3D.h" />
     <ClInclude Include="ModuleEditor.h" />
     <ClInclude Include="ModuleFileSystem.h" />
