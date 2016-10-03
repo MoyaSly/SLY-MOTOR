@@ -1,4 +1,4 @@
-/*#include "Globals.h"
+#include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneLoader.h"
 #include "Assimp/include/cimport.h"
@@ -48,4 +48,4 @@ bool ModuleSceneLoader::CleanUp()
 	aiDetachAllLogStreams();
 
 	return true;
-}*/
+}

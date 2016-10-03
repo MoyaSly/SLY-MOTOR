@@ -18,6 +18,6 @@ public:
 	bool Start();
 	bool CleanUp();
 
-}
+};
 
 #endif
