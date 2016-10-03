@@ -17,17 +17,17 @@ public:
 	bool Init();
 	bool Start();
 	bool CleanUp();
-	void LoadFile();
+	void LoadFile(const char* file);
 
-	struct vertex_data
-	{
-		uint id_vertices = 0; // id in VRAM
-		uint num_indices = 0;
-		uint* indices = nullptr;
-		uint id_indices = 0; // id in VRAM
-		uint num_vertices = 0;
-		float* vertices = nullptr;
-	};
+private:
+
+	uint id_vertices = 0; // id in VRAM
+	uint num_indices = 0;
+	uint* indices = nullptr;
+	uint id_indices = 0; // id in VRAM
+	uint num_vertices = 0;
+	float* vertices = nullptr;
+
 };
 
 #endif
