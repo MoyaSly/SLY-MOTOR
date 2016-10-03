@@ -49,3 +49,22 @@ bool ModuleSceneLoader::CleanUp()
 
 	return true;
 }
+
+void ModuleSceneLoader::LoadFile()
+{
+	/*const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
+	if (scene != nullptr && scene->HasMeshes())
+	{
+		// Use scene->mNumMeshes to iterate on scene->mMeshes array
+		aiReleaseImport(scene);
+	}
+	else
+		LOG(“Error loading scene %s”, full_path);
+
+	// copy vertices
+	vertex_data m;
+	m.num_vertices = new_mesh->mNumVertices;
+	m.vertices = new float[m.num_vertices * 3];
+	memcpy(m.vertices, new_mesh->mVertices, sizeof(float) * m.num_vertices * 3);
+	LOG("New mesh with %d vertices", m.num_vertices);*/
+}

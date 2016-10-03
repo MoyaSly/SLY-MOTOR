@@ -39,3 +39,35 @@ enum update_status
 #define YELLOW ImVec4(1.f,1.f,0.f,1.f)
 #define RED ImVec4(1.f,0.f,0.f,1.f)
 #define WHITE ImVec4(1.f,1.f,1.f,1.f)
+
+// Deletes a buffer
+#define RELEASE( x )\
+    {\
+       if( x != nullptr )\
+       {\
+         delete x;\
+	     x = nullptr;\
+       }\
+    }
+
+// Deletes an array of buffers
+#define RELEASE_ARRAY( x )\
+	{\
+       if( x != nullptr )\
+       {\
+           delete[] x;\
+	       x = nullptr;\
+		 }\
+	 }
+
+// Configuration -----------
+#define VERSION "0.4-alpha"
+#define ASSETS_FOLDER "/Assets/"
+#define SETTINGS_FOLDER "/Settings/"
+#define LIBRARY_FOLDER "/Library/"
+#define LIBRARY_AUDIO_FOLDER "/Library/Audio/"
+#define LIBRARY_TEXTURES_FOLDER "/Library/Textures/"
+#define LIBRARY_MESH_FOLDER "/Library/Meshes/"
+#define LIBRARY_BONE_FOLDER "/Library/Bones/"
+#define LIBRARY_ANIMATION_FOLDER "/Library/Animations/"
+#define LIBRARY_SCENE_FOLDER "/Library/Scenes/"

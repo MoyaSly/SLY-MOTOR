@@ -11,6 +11,7 @@ Application::Application()
 	physics = new ModulePhysics3D(this);
 	editor = new ModuleEditor(this);
 	scene_loader = new ModuleSceneLoader(this);
+	fs = new ModuleFileSystem(this);
 
 
 	frames = 0;
@@ -29,6 +30,7 @@ Application::Application()
 	AddModule(input);
 	AddModule(audio);
 	AddModule(physics);
+	AddModule(fs);
 	
 	// Scenes
 	AddModule(scene_intro);

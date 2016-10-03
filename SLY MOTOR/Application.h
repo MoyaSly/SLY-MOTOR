@@ -14,6 +14,7 @@
 #include "ModulePhysics3D.h"
 #include "ModuleEditor.h"
 #include "ModuleSceneLoader.h"
+#include "ModuleFileSystem.h"
 
 using namespace std;
 
@@ -29,6 +30,7 @@ public:
 	ModulePhysics3D* physics;
 	ModuleEditor* editor;
 	ModuleSceneLoader* scene_loader;
+	ModuleFileSystem* fs;
 
 private:
 

@@ -40,6 +40,9 @@
     <Filter Include="Sources\ExternLibs\gpudetect">
       <UniqueIdentifier>{a82a3255-3aff-4178-a34b-4df26bafa097}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\ExternLibs\Bass">
+      <UniqueIdentifier>{1c4e1bc6-ef70-40c7-a218-4e8c7c60d65f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -252,6 +255,18 @@
     <ClInclude Include="ModuleSceneLoader.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleFileSystem.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Bass\include\bass.h">
+      <Filter>Sources\ExternLibs\Bass</Filter>
+    </ClInclude>
+    <ClInclude Include="Bass\include\bassenc.h">
+      <Filter>Sources\ExternLibs\Bass</Filter>
+    </ClInclude>
+    <ClInclude Include="Bass\include\bassenc_ogg.h">
+      <Filter>Sources\ExternLibs\Bass</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -324,6 +339,9 @@
       <Filter>Sources\ExternLibs\gpudetect</Filter>
     </ClCompile>
     <ClCompile Include="ModuleSceneLoader.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFileSystem.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
