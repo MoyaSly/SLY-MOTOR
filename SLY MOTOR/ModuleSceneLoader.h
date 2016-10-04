@@ -21,6 +21,8 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+
+
 	std::vector<const Geometry*> geo;
 
 	void LoadFile(const char *file);

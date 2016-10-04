@@ -110,6 +110,7 @@ update_status ModuleEditor::Update(float dt)
 			{
 				ImGui::MenuItem("Configuration", "4", &show_configuration);
 				ImGui::MenuItem("Console", "3", &show_console);
+				ImGui::MenuItem("Outliner", "2", &show_outliner);
 				ImGui::EndMenu();
 			}
 
