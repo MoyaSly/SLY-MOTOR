@@ -26,6 +26,8 @@ bool ModuleEditor::Init()
 	w = App->window->GetWidth();
 	h = App->window->GetHeight();
 
+	strcpy(fbx_name, "C:/Users/MIQUEL/Documents/GitHub/SLY-MOTOR/SLY MOTOR/Revolver.fbx");
+
 	return true;
 }
 
@@ -81,6 +83,15 @@ update_status ModuleEditor::Update(float dt)
 	{
 		ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
 		ImGui::ShowTestWindow(&show_test_window);
+	}
+
+	if (show_outliner)
+	{
+		ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
+		ImGui::SetNextWindowPos(ImVec2(100, 100));
+		ImGui::Begin("Outliner", &show_outliner);
+		DrawOutliner();
+		ImGui::End();
 	}
 
 	if (show_menu_bar)
@@ -264,6 +275,18 @@ void ModuleEditor::DrawConfiguration()
 			ImGui::SameLine(); ImGui::TextColored(BLUE, "%.2fMb", vram_mb_available* 1024.f);
 			ImGui::TextColored(YELLOW, "VRAM Reserved");
 			ImGui::SameLine(); ImGui::TextColored(BLUE, "%.2fMb", vram_mb_reserved* 1024.f);
+		}
+	}
+}
+
+void ModuleEditor::DrawOutliner()
+{
+	if (ImGui::CollapsingHeader("Load Model"))
+	{
+		ImGui::InputText("##fbx_name", fbx_name, 256);
+		if (ImGui::Button("Load File"))
+		{
+			App->scene_loader->LoadFile(fbx_name);
 		}
 	}
 }

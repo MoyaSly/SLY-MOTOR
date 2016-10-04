@@ -23,8 +23,6 @@ public:
 
 	std::vector<const Geometry*> geo;
 
-private:
-
 	void LoadFile(const char *file);
 
 };

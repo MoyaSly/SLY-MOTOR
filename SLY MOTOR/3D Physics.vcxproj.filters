@@ -43,6 +43,9 @@
     <Filter Include="Sources\ExternLibs\Bass">
       <UniqueIdentifier>{1c4e1bc6-ef70-40c7-a218-4e8c7c60d65f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\ExternLibs\Devil">
+      <UniqueIdentifier>{c47c6f1d-cd45-492f-a82b-5b3fd45c01f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -269,6 +272,30 @@
     </ClInclude>
     <ClInclude Include="Geometry.h">
       <Filter>Sources\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\include\config.h">
+      <Filter>Sources\ExternLibs\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\include\devil_internal_exports.h">
+      <Filter>Sources\ExternLibs\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\include\il.h">
+      <Filter>Sources\ExternLibs\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\include\il_wrap.h">
+      <Filter>Sources\ExternLibs\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\include\ilu.h">
+      <Filter>Sources\ExternLibs\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\include\ilu_region.h">
+      <Filter>Sources\ExternLibs\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\include\ilut.h">
+      <Filter>Sources\ExternLibs\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\include\ilut_config.h">
+      <Filter>Sources\ExternLibs\Devil</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

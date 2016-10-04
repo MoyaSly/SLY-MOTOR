@@ -21,6 +21,7 @@ public:
 	update_status PostUpdate(float dt);
 	void DrawConfiguration();
 	void DrawConsole();
+	void DrawOutliner();
 	void Log(const char* entry);
 	bool CleanUp();
 
@@ -28,10 +29,11 @@ private:
 	void FillBar(Timer &timer, const int &timer_check, std::vector<float> &container, float new_value);
 
 	bool show_test_window = false;
-	bool show_configuration = true;
-	bool show_menu_bar = true;
-	bool show_console = true;
-	bool scroll_to_bottom = true;
+	bool show_configuration = false;
+	bool show_menu_bar = false;
+	bool show_console = false;
+	bool scroll_to_bottom = false;
+	bool show_outliner = true;
 
 private:
 	Timer frame_timer;
@@ -39,6 +41,7 @@ private:
 	std::vector<float> ms_log;
 	std::vector<float> frames_log;
 	uint w, h, min_w, min_h, max_w, max_h;
+	char fbx_name[256];
 	//ImGuiTextBuffer buf;
 	
 };
