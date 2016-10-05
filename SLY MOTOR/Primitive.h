@@ -71,11 +71,11 @@ public:
 };
 
 // ============================================
-class Line : public Primitive
+class MyLine : public Primitive
 {
 public:
-	Line();
-	Line(float x, float y, float z);
+	MyLine();
+	MyLine(float x, float y, float z);
 	void InnerRender() const;
 public:
 	vec3 origin;

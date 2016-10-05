@@ -26,7 +26,14 @@ bool ModuleEditor::Init()
 	w = App->window->GetWidth();
 	h = App->window->GetHeight();
 
-	strcpy(fbx_name, "C:/Users/MIQUEL/Documents/GitHub/SLY-MOTOR/SLY MOTOR/Revolver.fbx");
+	strcpy(fbx_name, ".fbx");
+
+
+	show_test_window = false;
+	show_configuration = false;
+	show_menu_bar = true;
+	show_console = false;
+	show_outliner = true;
 
 	return true;
 }
@@ -287,7 +294,7 @@ void ModuleEditor::DrawOutliner()
 		ImGui::InputText("##fbx_name", fbx_name, 256);
 		if (ImGui::Button("Load File"))
 		{
-			App->scene_loader->LoadFile(fbx_name);
+			App->game_object_manager->LoadGeometry(fbx_name);
 		}
 	}
 }

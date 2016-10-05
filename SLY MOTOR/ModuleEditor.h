@@ -28,12 +28,11 @@ public:
 private:
 	void FillBar(Timer &timer, const int &timer_check, std::vector<float> &container, float new_value);
 
-	bool show_test_window = false;
-	bool show_configuration = false;
-	bool show_menu_bar = false;
-	bool show_console = false;
-	bool scroll_to_bottom = false;
-	bool show_outliner = true;
+	bool show_test_window;
+	bool show_configuration;
+	bool show_menu_bar;
+	bool show_console;
+	bool show_outliner;
 
 private:
 	Timer frame_timer;

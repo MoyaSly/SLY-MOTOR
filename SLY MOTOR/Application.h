@@ -13,8 +13,8 @@
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
 #include "ModuleEditor.h"
-#include "ModuleSceneLoader.h"
 #include "ModuleFileSystem.h"
+#include "ModuleGameObjectManager.h"
 
 using namespace std;
 
@@ -29,8 +29,8 @@ public:
 	ModuleCamera3D* camera;
 	ModulePhysics3D* physics;
 	ModuleEditor* editor;
-	ModuleSceneLoader* scene_loader;
 	ModuleFileSystem* fs;
+	ModuleGameObjectManager* game_object_manager;
 
 private:
 

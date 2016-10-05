@@ -135,9 +135,9 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 update_status ModuleRenderer3D::Update(float dt)
 {
-	for (int i = 0; i < App->scene_loader->geo.size(); ++i)
+	for (int i = 0; i < App->game_object_manager->geo.size(); ++i)
 	{
-		DrawMesh(App->scene_loader->geo[i]);
+		DrawMesh(App->game_object_manager->geo[i]);
 	}
 	return UPDATE_CONTINUE;
 }

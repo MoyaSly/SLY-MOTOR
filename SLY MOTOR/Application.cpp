@@ -10,7 +10,7 @@ Application::Application()
 	camera = new ModuleCamera3D(this);
 	physics = new ModulePhysics3D(this);
 	editor = new ModuleEditor(this);
-	scene_loader = new ModuleSceneLoader(this);
+	game_object_manager = new ModuleGameObjectManager(this);
 	fs = new ModuleFileSystem(this);
 
 
@@ -35,7 +35,7 @@ Application::Application()
 	// Scenes
 	AddModule(scene_intro);
 	AddModule(editor);
-	AddModule(scene_loader);
+	AddModule(game_object_manager);
 
 	// Renderer last!
 	AddModule(renderer3D);

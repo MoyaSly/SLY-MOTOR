@@ -1,6 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
-#include "ModuleSceneLoader.h"
+#include "ModuleGameObjectManager.h"
 #include "Geometry.h"
 
 #include "Assimp/include/cimport.h"
@@ -11,16 +11,15 @@
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 using namespace std;
 
-ModuleSceneLoader::ModuleSceneLoader(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleGameObjectManager::ModuleGameObjectManager(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
 
-// Destructor
-ModuleSceneLoader::~ModuleSceneLoader()
-{}
+ModuleGameObjectManager::~ModuleGameObjectManager()
+{
+}
 
-// Called before render is available
-bool ModuleSceneLoader::Init()
+bool ModuleGameObjectManager::Init()
 {
 	bool ret = true;
 	struct aiLogStream stream;
@@ -32,35 +31,32 @@ bool ModuleSceneLoader::Init()
 	return ret;
 }
 
-bool ModuleSceneLoader::Start()
+bool ModuleGameObjectManager::Start()
 {
 	string t;
 	//Import("/Assets/Animation/Ethan/Ethan.fbx", t);
 	return true;
 }
 
-update_status ModuleSceneLoader::PreUpdate(float dt)
-{
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		LoadFile("C:/Users/MIQUEL/Documents/GitHub/SLY-MOTOR/SLY MOTOR/Revolver.fbx");
-
-	return UPDATE_CONTINUE;
-}
-
-// PostUpdate present buffer to screen
-update_status ModuleSceneLoader::Update(float dt)
+update_status ModuleGameObjectManager::PreUpdate(float dt)
 {
 	return UPDATE_CONTINUE;
 }
 
 // PostUpdate present buffer to screen
-update_status ModuleSceneLoader::PostUpdate(float dt)
+update_status ModuleGameObjectManager::Update(float dt)
+{
+	return UPDATE_CONTINUE;
+}
+
+// PostUpdate present buffer to screen
+update_status ModuleGameObjectManager::PostUpdate(float dt)
 {
 	return UPDATE_CONTINUE;
 }
 
 // Called before quitting or switching levels
-bool ModuleSceneLoader::CleanUp()
+bool ModuleGameObjectManager::CleanUp()
 {
 	// detach log stream
 	aiDetachAllLogStreams();
@@ -68,7 +64,12 @@ bool ModuleSceneLoader::CleanUp()
 	return true;
 }
 
-void ModuleSceneLoader::LoadFile(const char* file)
+/*GameObject* ModuleGameObjectManager::CreateNewGameObject(string name, GameObject* parent = NULL)
+{
+
+}*/
+
+void ModuleGameObjectManager::LoadGeometry(const char *file)
 {
 	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
 

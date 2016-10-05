@@ -66,7 +66,7 @@ public:
 	int	 getDebugMode() const;
 
 	DebugDrawModes mode;
-	Line line;
+	MyLine line;
 	Primitive point;
 };
 #endif

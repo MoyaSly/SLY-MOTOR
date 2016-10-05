@@ -46,6 +46,9 @@
     <Filter Include="Sources\ExternLibs\Devil">
       <UniqueIdentifier>{c47c6f1d-cd45-492f-a82b-5b3fd45c01f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\GameObject">
+      <UniqueIdentifier>{f828de8e-71a6-4b5e-b4cc-7ef3cebb9f92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -255,9 +258,6 @@
     <ClInclude Include="gpudetect\dxgi1_4.h">
       <Filter>Sources\ExternLibs\gpudetect</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleSceneLoader.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleFileSystem.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
@@ -269,9 +269,6 @@
     </ClInclude>
     <ClInclude Include="Bass\include\bassenc_ogg.h">
       <Filter>Sources\ExternLibs\Bass</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry.h">
-      <Filter>Sources\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="Devil\include\config.h">
       <Filter>Sources\ExternLibs\Devil</Filter>
@@ -296,6 +293,18 @@
     </ClInclude>
     <ClInclude Include="Devil\include\ilut_config.h">
       <Filter>Sources\ExternLibs\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleGameObjectManager.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>Sources\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Sources\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Sources\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -368,10 +377,19 @@
     <ClCompile Include="gpudetect\DeviceId.cpp">
       <Filter>Sources\ExternLibs\gpudetect</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleSceneLoader.cpp">
+    <ClCompile Include="ModuleFileSystem.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleFileSystem.cpp">
+    <ClCompile Include="Component.cpp">
+      <Filter>Sources\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Sources\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry.cpp">
+      <Filter>Sources\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ModulegameObjectManager.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
