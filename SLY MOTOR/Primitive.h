@@ -1,5 +1,6 @@
+#ifndef __Primitive_H__
+#define __Primitive_H__
 
-#pragma once
 #include "glmath.h"
 #include "Color.h"
 
@@ -37,33 +38,33 @@ protected:
 };
 
 // ============================================
-class Cube : public Primitive
+class MyCube : public Primitive
 {
-public :
-	Cube();
-	Cube(float sizeX, float sizeY, float sizeZ);
+public:
+	MyCube();
+	MyCube(float sizeX, float sizeY, float sizeZ);
 	void InnerRender() const;
 public:
 	vec3 size;
 };
 
 // ============================================
-class Sphere : public Primitive
+class MySphere : public Primitive
 {
 public:
-	Sphere();
-	Sphere(float radius);
+	MySphere();
+	MySphere(float radius);
 	void InnerRender() const;
 public:
 	float radius;
 };
 
 // ============================================
-class Cylinder : public Primitive
+class MyCylinder : public Primitive
 {
 public:
-	Cylinder();
-	Cylinder(float radius, float height);
+	MyCylinder();
+	MyCylinder(float radius, float height);
 	void InnerRender() const;
 public:
 	float radius;
@@ -83,13 +84,15 @@ public:
 };
 
 // ============================================
-class Plane : public Primitive
+class MyPlane : public Primitive
 {
 public:
-	Plane();
-	Plane(float x, float y, float z, float d);
+	MyPlane();
+	MyPlane(float x, float y, float z, float d);
 	void InnerRender() const;
 public:
 	vec3 normal;
 	float constant;
 };
+
+#endif

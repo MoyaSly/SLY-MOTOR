@@ -36,6 +36,11 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	glColor3f(1.f, 1.f, 1.f);
+	MyPlane p(0, 1, 0, 0);
+	p.axis = true;
+	p.Render();
+
 	/*float x = 0.5f;
 	float y = 0.5f;
 	float z = 0.5f;

@@ -22,6 +22,8 @@ public:
 	void DrawConfiguration();
 	void DrawConsole();
 	void DrawOutliner();
+	void DrawGOLoader();
+	void DrawAtributeEditor();
 	void Log(const char* entry);
 	bool CleanUp();
 
@@ -32,7 +34,10 @@ private:
 	bool show_configuration;
 	bool show_menu_bar;
 	bool show_console;
+	bool scroll_to_bottom;
 	bool show_outliner;
+	bool show_gameobject_loader;
+	bool show_atribute_editor;
 
 private:
 	Timer frame_timer;

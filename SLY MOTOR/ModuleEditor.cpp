@@ -26,14 +26,18 @@ bool ModuleEditor::Init()
 	w = App->window->GetWidth();
 	h = App->window->GetHeight();
 
-	strcpy(fbx_name, ".fbx");
-
+	//strcpy(fbx_name, ".fbx");
+	strcpy(fbx_name, "C:/Users/MIQUEL/Documents/GitHub/SLY-MOTOR/SLY MOTOR/Revolver.fbx");
+	//strcpy(fbx_name, "C:/Users/miquelms4/Documents/GitHub/SLY-MOTOR/SLY MOTOR/Revolver.fbx");
 
 	show_test_window = false;
 	show_configuration = false;
 	show_menu_bar = true;
 	show_console = false;
+	scroll_to_bottom = false;
 	show_outliner = true;
+	show_gameobject_loader = false;
+	show_atribute_editor = true;
 
 	return true;
 }
@@ -94,10 +98,28 @@ update_status ModuleEditor::Update(float dt)
 
 	if (show_outliner)
 	{
-		ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
-		ImGui::SetNextWindowPos(ImVec2(100, 100));
+		ImGui::SetNextWindowPos(ImVec2(0, 20));
+		ImGui::SetNextWindowSize(ImVec2(300, SCREEN_HEIGHT - 20));
 		ImGui::Begin("Outliner", &show_outliner);
 		DrawOutliner();
+		ImGui::End();
+	}
+
+	if (show_gameobject_loader)
+	{
+		ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 300, SCREEN_HEIGHT - 100));
+		ImGui::SetNextWindowSize(ImVec2(300, 100));
+		ImGui::Begin("GameObject Loader", &show_gameobject_loader);
+		DrawGOLoader();
+		ImGui::End();
+	}
+
+	if (show_atribute_editor)
+	{
+		ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 300, 20));
+		ImGui::SetNextWindowSize(ImVec2(300, SCREEN_HEIGHT - 20));
+		ImGui::Begin("Atribute Editor", &show_atribute_editor);
+		DrawAtributeEditor();
 		ImGui::End();
 	}
 
@@ -115,9 +137,11 @@ update_status ModuleEditor::Update(float dt)
 
 			if (ImGui::BeginMenu("View"))
 			{
+				ImGui::MenuItem("Atribute Editor", "5", &show_atribute_editor);
 				ImGui::MenuItem("Configuration", "4", &show_configuration);
 				ImGui::MenuItem("Console", "3", &show_console);
 				ImGui::MenuItem("Outliner", "2", &show_outliner);
+				ImGui::MenuItem("GameObject Loader", "1", &show_gameobject_loader);
 				ImGui::EndMenu();
 			}
 
@@ -289,13 +313,25 @@ void ModuleEditor::DrawConfiguration()
 
 void ModuleEditor::DrawOutliner()
 {
-	if (ImGui::CollapsingHeader("Load Model"))
+
+}
+
+void ModuleEditor::DrawGOLoader()
+{
+	ImGui::InputText("##fbx_name", fbx_name, 256);
+	if (ImGui::Button("Load File"))
 	{
-		ImGui::InputText("##fbx_name", fbx_name, 256);
-		if (ImGui::Button("Load File"))
-		{
-			App->game_object_manager->LoadGeometry(fbx_name);
-		}
+		App->game_object_manager->LoadGeometry(fbx_name);
+	}
+}
+
+void ModuleEditor::DrawAtributeEditor()
+{
+	if (ImGui::CollapsingHeader("Translations"))
+	{
+		ImGui::TextColored(YELLOW, "Translation");
+		ImGui::TextColored(YELLOW, "Rotation");
+		ImGui::TextColored(YELLOW, "Scale");
 	}
 }
 
