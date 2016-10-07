@@ -75,4 +75,7 @@ enum update_status
 #define LIBRARY_ANIMATION_FOLDER "/Library/Animations/"
 #define LIBRARY_SCENE_FOLDER "/Library/Scenes/"
 
+#define CHECKERS_HEIGHT 128
+#define CHECKERS_WIDTH 128
+
 #endif

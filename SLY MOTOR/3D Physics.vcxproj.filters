@@ -28,9 +28,6 @@
     <Filter Include="Sources\ExternLibs\MathGeoLib">
       <UniqueIdentifier>{5377ec70-d0b3-4a1f-8930-5674c839ee65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\ExternLibs\mmgr">
-      <UniqueIdentifier>{5f70bf14-2118-4f03-b2cc-b834b5cf579a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\ExternLibs\Assimp">
       <UniqueIdentifier>{31ed8303-45b9-4b58-a211-6002407accb5}</UniqueIdentifier>
     </Filter>
@@ -48,6 +45,9 @@
     </Filter>
     <Filter Include="Sources\GameObject">
       <UniqueIdentifier>{f828de8e-71a6-4b5e-b4cc-7ef3cebb9f92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\ExternLibs\glm">
+      <UniqueIdentifier>{24a42be1-49e0-443a-9b4c-fb7e08ab7b07}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -305,6 +305,75 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Sources\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\common.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\exponential.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\ext.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\fwd.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\geometric.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\glm.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\integer.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\mat2x2.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\mat2x3.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\mat2x4.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\mat3x2.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\mat3x3.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\mat3x4.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\mat4x2.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\mat4x3.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\mat4x4.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\matrix.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\packing.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\trigonometric.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\vec2.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\vec3.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\vec4.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\vector_relational.hpp">
+      <Filter>Sources\ExternLibs\glm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

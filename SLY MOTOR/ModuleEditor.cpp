@@ -27,8 +27,8 @@ bool ModuleEditor::Init()
 	h = App->window->GetHeight();
 
 	//strcpy(fbx_name, ".fbx");
-	strcpy(fbx_name, "C:/Users/MIQUEL/Documents/GitHub/SLY-MOTOR/SLY MOTOR/Revolver.fbx");
-	//strcpy(fbx_name, "C:/Users/miquelms4/Documents/GitHub/SLY-MOTOR/SLY MOTOR/Revolver.fbx");
+	strcpy(fbx_name, "C:/Users/MIQUEL/Documents/GitHub/SLY-MOTOR/SLY MOTOR/Brutus.fbx");
+	//strcpy(fbx_name, "C:/Users/miquelms4/Documents/GitHub/SLY-MOTOR/SLY MOTOR/Brutus.fbx");
 
 	show_test_window = false;
 	show_configuration = false;
@@ -36,7 +36,7 @@ bool ModuleEditor::Init()
 	show_console = false;
 	scroll_to_bottom = false;
 	show_outliner = true;
-	show_gameobject_loader = false;
+	show_gameobject_loader = true;
 	show_atribute_editor = true;
 
 	return true;
@@ -105,21 +105,21 @@ update_status ModuleEditor::Update(float dt)
 		ImGui::End();
 	}
 
-	if (show_gameobject_loader)
-	{
-		ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 300, SCREEN_HEIGHT - 100));
-		ImGui::SetNextWindowSize(ImVec2(300, 100));
-		ImGui::Begin("GameObject Loader", &show_gameobject_loader);
-		DrawGOLoader();
-		ImGui::End();
-	}
-
 	if (show_atribute_editor)
 	{
 		ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 300, 20));
 		ImGui::SetNextWindowSize(ImVec2(300, SCREEN_HEIGHT - 20));
 		ImGui::Begin("Atribute Editor", &show_atribute_editor);
 		DrawAtributeEditor();
+		ImGui::End();
+	}
+
+	if (show_gameobject_loader)
+	{
+		ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 300, SCREEN_HEIGHT - 100));
+		ImGui::SetNextWindowSize(ImVec2(300, 100));
+		ImGui::Begin("GameObject Loader", &show_gameobject_loader);
+		DrawGOLoader();
 		ImGui::End();
 	}
 

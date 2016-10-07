@@ -137,7 +137,7 @@ update_status ModuleRenderer3D::Update(float dt)
 {
 	for (int i = 0; i < App->game_object_manager->geo.size(); ++i)
 	{
-		DrawMesh(App->game_object_manager->geo[i]);
+		DrawGeometry(App->game_object_manager->geo[i]);
 	}
 	return UPDATE_CONTINUE;
 }
@@ -220,7 +220,7 @@ bool ModuleRenderer3D::LoadGeometryBuffer(const Geometry *geometry)
 	return ret;
 }
 
-void ModuleRenderer3D::DrawMesh(const Geometry *geo)
+void ModuleRenderer3D::DrawGeometry(const Geometry *geo)
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);

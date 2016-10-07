@@ -24,7 +24,7 @@ public:
 
 	void OnResize(int width, int height);
 	bool LoadGeometryBuffer(const Geometry *geometry);
-	void DrawMesh(const Geometry *geometry);
+	void DrawGeometry(const Geometry *geometry);
 
 public:
 

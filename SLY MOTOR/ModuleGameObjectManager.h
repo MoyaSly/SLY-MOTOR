@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "MathGeoLib\MathGeoLib.h"
 #include "GameObject.h"
+#include "Glew\include\glew.h"
 
 
 class ModuleGameObjectManager : public Module
@@ -22,11 +23,12 @@ public:
 
 	//GameObject* CreateNewGameObject(std::string name, GameObject* parent = NULL);
 
-
-	std::vector<const Geometry*> geo;
+	std::vector<Geometry*> geo;
 	void LoadGeometry(const char *file);
-
-
+	uint LoadIMG(char *file);
+	bool geometry_loaded = false;
+	GLubyte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
+	uint texture_id;
 
 };
 

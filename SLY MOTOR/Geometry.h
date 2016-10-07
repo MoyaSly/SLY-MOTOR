@@ -17,20 +17,25 @@ public:
 	Geometry();
 	~Geometry();
 
-	// Indices
+	// INDICES
 	uint id_indices = 0; // id in VRAM
 	uint num_indices = 0;
 	uint* indices = nullptr;
 
-	// Vertices
+	// VERTICES
 	uint id_vertices = 0; // id in VRAM
 	uint num_vertices = 0;
 	float3 *vertices = nullptr;
 
-	// Normals
+	// NORMALS
 	uint id_normals = 0; // id in VRAM
 	uint num_normals = 0;
 	float3 *normals = nullptr;
+
+	uint id_textures = 0; // id in VRAM
+	uint num_textures = 0;
+	float2 *textures = nullptr;
+
 
 };
 
