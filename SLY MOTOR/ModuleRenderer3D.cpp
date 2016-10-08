@@ -183,59 +183,52 @@ bool ModuleRenderer3D::LoadGeometryBuffer(const Geometry *geometry)
 {
 	bool ret = true;
 
-	// Vertices
+	// VERTICES
 	glGenBuffers(1, (GLuint*) &(geometry->id_vertices));
-	if (geometry->id_vertices == 0)
-	{
-		ret = false;
-	}
-	else
-	{
-		glBindBuffer(GL_ARRAY_BUFFER, geometry->id_vertices);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * geometry->num_vertices * 3, geometry->vertices, GL_STATIC_DRAW);
-	}
+	glBindBuffer(GL_ARRAY_BUFFER, geometry->id_vertices);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * geometry->num_vertices * 3, geometry->vertices, GL_STATIC_DRAW);
 
-	// Normals
+	// NORMALS
 	glGenBuffers(1, (GLuint*) &(geometry->id_normals));
-	if (geometry->id_normals == 0)
-	{
-		ret = false;
-	}
-	else
-	{
-		glBindBuffer(GL_ARRAY_BUFFER, geometry->id_normals);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * geometry->num_normals * 3, geometry->normals, GL_STATIC_DRAW);
-	}
+	glBindBuffer(GL_ARRAY_BUFFER, geometry->id_normals);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * geometry->num_normals * 3, geometry->normals, GL_STATIC_DRAW);
 
-	// Indices
+	// INDICES
 	glGenBuffers(1, (GLuint*) &(geometry->id_indices));
-	if (geometry->id_indices == 0)
-	{
-		ret = false;
-	}
-	else
-	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometry->id_indices);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*geometry->num_indices, geometry->indices, GL_STATIC_DRAW);
-	}
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometry->id_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*geometry->num_indices, geometry->indices, GL_STATIC_DRAW);
+	
 
 	return ret;
 }
 
 void ModuleRenderer3D::DrawGeometry(const Geometry *geo)
 {
+	//ENABLES
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
+	// VERTICES
 	glBindBuffer(GL_ARRAY_BUFFER, geo->id_vertices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
+	//NORMALS
 	glBindBuffer(GL_ARRAY_BUFFER, geo->id_normals);
 	glNormalPointer(GL_FLOAT, 0, NULL);
 
+	//INDICES
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geo->id_indices);
 	glDrawElements(GL_TRIANGLES, geo->num_indices, GL_UNSIGNED_INT, NULL);
 
+	//TEXTURES
+	glBindBuffer(GL_ARRAY_BUFFER, geo->id_textures);
+	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+	glBindTexture(GL_TEXTURE_2D, 2);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	//DISABLES
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 }

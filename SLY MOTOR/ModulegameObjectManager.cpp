@@ -137,38 +137,44 @@ void ModuleGameObjectManager::LoadGeometry(const char *file)
 		for (uint i = 0; i < scene->mNumMeshes; ++i)
 		{
 			Geometry *body = new Geometry();
-			aiMesh *ai_mesh = scene->mMeshes[i];
+			aiMesh *new_mesh = scene->mMeshes[i];
 
 			// VERTICES
-			body->num_vertices = ai_mesh->mNumVertices;
+			body->num_vertices = new_mesh->mNumVertices;
 			body->vertices = new float3[body->num_vertices];
-			memcpy(body->vertices, ai_mesh->mVertices, sizeof(float3) * body->num_vertices);
+			memcpy(body->vertices, new_mesh->mVertices, sizeof(float3) * body->num_vertices);
+			LOG_ME("New mesh with %d vertices", body->num_vertices);
 
 			// NORMALES
-			body->num_normals = ai_mesh->mNumVertices;
+			body->num_normals = new_mesh->mNumVertices;
 			body->normals = new float3[body->num_normals];
-			memcpy(body->normals, ai_mesh->mNormals, sizeof(float3) * body->num_vertices);
+			memcpy(body->normals, new_mesh->mNormals, sizeof(float3) * body->num_vertices);
+			LOG_ME("New mesh with %d normals", body->num_vertices);
 
 			// INDICES
-			if (ai_mesh->HasFaces())
+			if (new_mesh->HasFaces())
 			{
-				body->num_indices = ai_mesh->mNumFaces * 3;
+				body->num_indices = new_mesh->mNumFaces * 3;
 				body->indices = new uint[body->num_indices];
-				for (uint j = 0; j < ai_mesh->mNumFaces; ++j)
+				for (uint j = 0; j < new_mesh->mNumFaces; ++j)
 				{
-					if (ai_mesh->mFaces[j].mNumIndices == 3)
+					if (new_mesh->mFaces[j].mNumIndices != 3)
 					{
-						memcpy(&body->indices[j * 3], ai_mesh->mFaces[j].mIndices, 3 * sizeof(uint));
+						LOG_ME("WARNING, geometry face with != 3 indices!");
+					}
+					else
+					{
+						memcpy(&body->indices[j * 3], new_mesh->mFaces[j].mIndices, 3 * sizeof(uint));
 					}
 				}
 			}
 
 			uint UV_index = 0;
-			if (ai_mesh->HasTextureCoords(UV_index))
+			if (new_mesh->HasTextureCoords(UV_index))
 			{
-				body->num_textures = ai_mesh->mNumVertices;
+				body->num_textures = new_mesh->mNumVertices;
 				body->textures = new float2[body->num_textures];
-				memcpy(body->textures, ai_mesh->mTextureCoords[UV_index], sizeof(float2) * body->num_textures);
+				memcpy(body->textures, new_mesh->mTextureCoords[UV_index], sizeof(float2) * body->num_textures);
 			}
 
 			App->renderer3D->LoadGeometryBuffer(body);
@@ -178,7 +184,7 @@ void ModuleGameObjectManager::LoadGeometry(const char *file)
 		aiReleaseImport(scene);
 	}
 	else
-		LOG_ME("Error loading model %s: %s", file, aiGetErrorString());
+		LOG_ME("Error loading scene %s", file);
 
 }
 
