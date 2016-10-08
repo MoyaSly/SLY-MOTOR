@@ -278,6 +278,10 @@ void ModuleEditor::DrawAtributeEditor()
 	ImGui::SetNextWindowSize(ImVec2(300, SCREEN_HEIGHT - 20));
 	ImGui::Begin("Atribute Editor", &show_atribute_editor);
 
+	if (ImGui::CollapsingHeader("Background Color"))
+	{
+		ImGui::ColorEdit4("Edit Color",&App->camera->background);
+	}
 	if (ImGui::CollapsingHeader("Translations"))
 	{
 		ImGui::TextColored(YELLOW, "Translation");

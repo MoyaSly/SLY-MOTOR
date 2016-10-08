@@ -21,6 +21,7 @@ public:
 	float* GetViewMatrix();
 
 	vec3 X, Y, Z, Position, Reference;
+	Color background;
 
 private:
 
