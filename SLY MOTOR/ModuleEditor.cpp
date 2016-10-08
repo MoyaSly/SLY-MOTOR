@@ -89,7 +89,7 @@ update_status ModuleEditor::Update(float dt)
 		ms_log.push_back(App->GetFrameMs());
 	}
 
-	//SHOWA
+	//SHOWS
 	if (show_configuration){DrawConfiguration();}
 	if (show_console){DrawConsole();}
 	if (show_test_window){ImGui::ShowTestWindow(&show_test_window);}
@@ -97,6 +97,7 @@ update_status ModuleEditor::Update(float dt)
 	if (show_atribute_editor){DrawAtributeEditor();}
 	if (show_gameobject_loader){DrawGOLoader();}
 	if (show_menu_bar){ret = DrawMenuBar(ret);}
+
 	return ret;
 }
 
@@ -343,6 +344,7 @@ update_status ModuleEditor::DrawMenuBar(update_status ret)
 	}
 	return ret;
 }
+
 void ModuleEditor::Log(const char * entry)
 {
 	/*if (show_console)
