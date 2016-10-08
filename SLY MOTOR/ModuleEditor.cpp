@@ -69,102 +69,34 @@ void ModuleEditor::FillBar(Timer &timer, const int &timer_check, vector<float> &
 update_status ModuleEditor::Update(float dt)
 {
 	update_status ret = UPDATE_CONTINUE;
-	FillBar(frame_timer, 1000, frames_log, App->GetFramerateLimit());
-	FillBar(ms_timer, 1, ms_log, App->GetFrameMs());
 
-	if (show_configuration)
+	// FRAME_TIMER & MS_TIMER UPDATE
+	if (frames_log.size() > 100)
 	{
-		ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiSetCond_FirstUseEver);
-		ImGui::SetNextWindowPos(ImVec2(700, 60));
-		ImGui::Begin("Configuration", &show_configuration);
-		DrawConfiguration();
-		ImGui::End();
-	}
-
-	if (show_console)
-	{
-		ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiSetCond_FirstUseEver);
-		ImGui::SetNextWindowPos(ImVec2(700, 360));
-		ImGui::Begin("Console", &show_console);
-		DrawConsole();
-		ImGui::End();
-	}
-
-	if (show_test_window)
-	{
-		ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
-		ImGui::ShowTestWindow(&show_test_window);
-	}
-
-	if (show_outliner)
-	{
-		ImGui::SetNextWindowPos(ImVec2(0, 20));
-		ImGui::SetNextWindowSize(ImVec2(300, SCREEN_HEIGHT - 20));
-		ImGui::Begin("Outliner", &show_outliner);
-		DrawOutliner();
-		ImGui::End();
-	}
-
-	if (show_atribute_editor)
-	{
-		ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 300, 20));
-		ImGui::SetNextWindowSize(ImVec2(300, SCREEN_HEIGHT - 20));
-		ImGui::Begin("Atribute Editor", &show_atribute_editor);
-		DrawAtributeEditor();
-		ImGui::End();
-	}
-
-	if (show_gameobject_loader)
-	{
-		ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 300, SCREEN_HEIGHT - 100));
-		ImGui::SetNextWindowSize(ImVec2(300, 100));
-		ImGui::Begin("GameObject Loader", &show_gameobject_loader);
-		DrawGOLoader();
-		ImGui::End();
-	}
-
-	if (show_menu_bar)
-	{
-		if (ImGui::BeginMainMenuBar())
+		for (int i = 1; i < frames_log.size(); i++)
 		{
-			if (ImGui::BeginMenu("File"))
-			{
-				if (ImGui::MenuItem("Quit", "ESC"))
-					ret = UPDATE_STOP;
-
-				ImGui::EndMenu();
-			}
-
-			if (ImGui::BeginMenu("View"))
-			{
-				ImGui::MenuItem("Atribute Editor", "5", &show_atribute_editor);
-				ImGui::MenuItem("Configuration", "4", &show_configuration);
-				ImGui::MenuItem("Console", "3", &show_console);
-				ImGui::MenuItem("Outliner", "2", &show_outliner);
-				ImGui::MenuItem("GameObject Loader", "1", &show_gameobject_loader);
-				ImGui::EndMenu();
-			}
-
-			if (ImGui::BeginMenu("Help"))
-			{
-				if (ImGui::MenuItem("Gui Demo"))
-				{
-					show_test_window = !show_test_window;
-				}
-
-				if (ImGui::MenuItem("Documentation"))
-					App->RequestBrowser("https://github.com/MoyaSly/SLY-MOTOR/wiki");
-
-				if (ImGui::MenuItem("Download latest"))
-					App->RequestBrowser("https://github.com/MoyaSly/SLY-MOTOR/releases");
-
-				if (ImGui::MenuItem("Report a bug"))
-					App->RequestBrowser("https://github.com/MoyaSly/SLY-MOTOR/issues");
-				ImGui::EndMenu();
-			}
-				ImGui::EndMainMenuBar();
+			frames_log[i - 1] = frames_log[i];
+			ms_log[i - 1] = ms_log[i];
 		}
+
+		frames_log[frames_log.size() - 1] = App->GetFramerateLimit();
+		ms_log[ms_log.size() - 1] = App->GetFrameMs();
 	}
+
+	else
+	{
+		frames_log.push_back(App->GetFramerateLimit());
+		ms_log.push_back(App->GetFrameMs());
+	}
+
+	//SHOWA
+	if (show_configuration){DrawConfiguration();}
+	if (show_console){DrawConsole();}
+	if (show_test_window){ImGui::ShowTestWindow(&show_test_window);}
+	if (show_outliner){DrawOutliner();}
+	if (show_atribute_editor){DrawAtributeEditor();}
+	if (show_gameobject_loader){DrawGOLoader();}
+	if (show_menu_bar){ret = DrawMenuBar(ret);}
 	return ret;
 }
 
@@ -175,6 +107,10 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 void ModuleEditor::DrawConfiguration()
 {
+	ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiSetCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(700, 60));
+	ImGui::Begin("Configuration", &show_configuration);
+
 	if (ImGui::CollapsingHeader("Application"))
 	{
 		// APP NAME
@@ -309,35 +245,54 @@ void ModuleEditor::DrawConfiguration()
 			ImGui::SameLine(); ImGui::TextColored(BLUE, "%.2fMb", vram_mb_reserved* 1024.f);
 		}
 	}
+
+	ImGui::End();
 }
 
 void ModuleEditor::DrawOutliner()
 {
-
+	ImGui::SetNextWindowPos(ImVec2(0, 20));
+	ImGui::SetNextWindowSize(ImVec2(300, SCREEN_HEIGHT - 20));
+	ImGui::Begin("Outliner", &show_outliner);
+	ImGui::End();
 }
 
 void ModuleEditor::DrawGOLoader()
 {
+	ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 300, SCREEN_HEIGHT - 100));
+	ImGui::SetNextWindowSize(ImVec2(300, 100));
+	ImGui::Begin("GameObject Loader", &show_gameobject_loader);
 	ImGui::InputText("##fbx_name", fbx_name, 256);
+
 	if (ImGui::Button("Load File"))
 	{
 		App->game_object_manager->LoadGeometry(fbx_name);
 	}
+	ImGui::End();
 }
 
 void ModuleEditor::DrawAtributeEditor()
 {
+	ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 300, 20));
+	ImGui::SetNextWindowSize(ImVec2(300, SCREEN_HEIGHT - 20));
+	ImGui::Begin("Atribute Editor", &show_atribute_editor);
+
 	if (ImGui::CollapsingHeader("Translations"))
 	{
 		ImGui::TextColored(YELLOW, "Translation");
 		ImGui::TextColored(YELLOW, "Rotation");
 		ImGui::TextColored(YELLOW, "Scale");
 	}
+	ImGui::End();
 }
 
 void ModuleEditor::DrawConsole()
 {
 	/*ImGui::Begin("Console", &show_console, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoFocusOnAppearing);
+	ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiSetCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(700, 360));
+	ImGui::Begin("Console", &show_console);
+
 	ImGui::TextUnformatted(buf.begin());
 	if (scroll_to_bottom)
 		ImGui::SetScrollHere(1.0f);
@@ -345,6 +300,49 @@ void ModuleEditor::DrawConsole()
 	ImGui::End();*/
 }
 
+update_status ModuleEditor::DrawMenuBar(update_status ret)
+{
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("File"))
+		{
+			if (ImGui::MenuItem("Quit", "ESC"))
+				ret = UPDATE_STOP;
+
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("View"))
+		{
+			ImGui::MenuItem("Atribute Editor", "5", &show_atribute_editor);
+			ImGui::MenuItem("Configuration", "4", &show_configuration);
+			ImGui::MenuItem("Console", "3", &show_console);
+			ImGui::MenuItem("Outliner", "2", &show_outliner);
+			ImGui::MenuItem("GameObject Loader", "1", &show_gameobject_loader);
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Help"))
+		{
+			if (ImGui::MenuItem("Gui Demo"))
+			{
+				show_test_window = !show_test_window;
+			}
+
+			if (ImGui::MenuItem("Documentation"))
+				App->RequestBrowser("https://github.com/MoyaSly/SLY-MOTOR/wiki");
+
+			if (ImGui::MenuItem("Download latest"))
+				App->RequestBrowser("https://github.com/MoyaSly/SLY-MOTOR/releases");
+
+			if (ImGui::MenuItem("Report a bug"))
+				App->RequestBrowser("https://github.com/MoyaSly/SLY-MOTOR/issues");
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
+	}
+	return ret;
+}
 void ModuleEditor::Log(const char * entry)
 {
 	/*if (show_console)

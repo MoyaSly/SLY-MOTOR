@@ -24,6 +24,7 @@ public:
 	void DrawOutliner();
 	void DrawGOLoader();
 	void DrawAtributeEditor();
+	update_status DrawMenuBar(update_status ret);
 	void Log(const char* entry);
 	bool CleanUp();
 
