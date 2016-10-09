@@ -36,7 +36,7 @@ public:
 	uint num_textures = 0;
 	float2 *textures = nullptr;
 
-
+	bool init = false;
 };
 
 #endif

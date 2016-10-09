@@ -285,8 +285,17 @@ void ModuleEditor::DrawAtributeEditor()
 	if (ImGui::CollapsingHeader("Translations"))
 	{
 		ImGui::TextColored(YELLOW, "Translation");
+		ImGui::DragInt("##tX", &translation[0], 0.1, 0, 0, "%.2f");
+		ImGui::DragInt("##tY", &translation[1], 0.1, 0, 0, "%.2f");
+		ImGui::DragInt("##tZ", &translation[2], 0.1, 0, 0, "%.2f");
 		ImGui::TextColored(YELLOW, "Rotation");
+		ImGui::DragInt("##rX", &rotation[0], 0.1, 0, 0, "%.2f");
+		ImGui::DragInt("##rY", &rotation[1], 0.1, 0, 0, "%.2f");
+		ImGui::DragInt("##rZ", &rotation[2], 0.1, 0, 0, "%.2f");
 		ImGui::TextColored(YELLOW, "Scale");
+		ImGui::DragInt("##sX", &scale[0], 0.1, 0, 0, "%.2f");
+		ImGui::DragInt("##sY", &scale[1], 0.1, 0, 0, "%.2f");
+		ImGui::DragInt("##sZ", &scale[2], 0.1, 0, 0, "%.2f");
 	}
 	ImGui::End();
 }

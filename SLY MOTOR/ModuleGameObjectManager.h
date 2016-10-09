@@ -25,10 +25,8 @@ public:
 
 	std::vector<Geometry*> geo;
 	void LoadGeometry(const char *file);
-	uint LoadIMG(char *file);
 	bool geometry_loaded = false;
-	GLubyte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
-	uint texture_id;
+	uint texture_id = 0;
 
 };
 

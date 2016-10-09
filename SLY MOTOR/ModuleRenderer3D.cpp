@@ -198,7 +198,7 @@ bool ModuleRenderer3D::LoadGeometryBuffer(const Geometry *geometry)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometry->id_indices);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*geometry->num_indices, geometry->indices, GL_STATIC_DRAW);
 	
-
+	
 	return ret;
 }
 
@@ -207,7 +207,6 @@ void ModuleRenderer3D::DrawGeometry(const Geometry *geo)
 	//ENABLES
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	// VERTICES
 	glBindBuffer(GL_ARRAY_BUFFER, geo->id_vertices);
@@ -221,14 +220,7 @@ void ModuleRenderer3D::DrawGeometry(const Geometry *geo)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geo->id_indices);
 	glDrawElements(GL_TRIANGLES, geo->num_indices, GL_UNSIGNED_INT, NULL);
 
-	//TEXTURES
-	glBindBuffer(GL_ARRAY_BUFFER, geo->id_textures);
-	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-	glBindTexture(GL_TEXTURE_2D, 2);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
 	//DISABLES
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 }

@@ -47,6 +47,9 @@ private:
 	std::vector<float> frames_log;
 	uint w, h, min_w, min_h, max_w, max_h;
 	char fbx_name[256];
+	int translation[3] = { 0, 0, 0 };
+	int rotation[3] = { 0, 0, 0 };
+	int scale[3] = { 0, 0, 0 };
 	//ImGuiTextBuffer buf;
 	
 };
