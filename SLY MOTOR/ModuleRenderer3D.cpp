@@ -198,15 +198,27 @@ bool ModuleRenderer3D::LoadGeometryBuffer(const Geometry *geometry)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometry->id_indices);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*geometry->num_indices, geometry->indices, GL_STATIC_DRAW);
 	
+	//TEXTURES
+	glGenBuffers(1, (GLuint*) &(geometry->id_textures));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometry->id_textures);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*geometry->num_textures * 2, geometry->textures, GL_STATIC_DRAW);
 	
 	return ret;
 }
 
-void ModuleRenderer3D::DrawGeometry(const Geometry *geo)
+void ModuleRenderer3D::DrawGeometry(Geometry *geo)
 {
 	//ENABLES
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
+	//---------------------------------------
+
+
+/*	if (geo->textured == false)
+	{
+		geo->id_textures = App->game_object_manager->LoadIMG("Lenna.png");
+		geo->textured = true;
+	}*/
 
 	// VERTICES
 	glBindBuffer(GL_ARRAY_BUFFER, geo->id_vertices);
@@ -221,6 +233,7 @@ void ModuleRenderer3D::DrawGeometry(const Geometry *geo)
 	glDrawElements(GL_TRIANGLES, geo->num_indices, GL_UNSIGNED_INT, NULL);
 
 	//DISABLES
+	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 }

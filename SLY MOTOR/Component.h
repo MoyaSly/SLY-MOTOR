@@ -3,18 +3,19 @@
 
 #include "Globals.h"
 #include "Application.h"
-
-	enum ComponentType
-	{
-		ComponentTransform,
-		ComponentGeometry
-	};
+#include "MathGeoLib\MathGeoLib.h"
 
 class GameObject;
 
 class Component
 {
 public:
+
+	enum ComponentType
+	{
+		ComponentGeometry
+	};
+
 	Component(GameObject* parent, int id);
 	~Component();
 
@@ -30,7 +31,6 @@ public:
 	GameObject* parent;
 	int id;
 	ComponentType type;
-
 
 private:
 	bool enabled;

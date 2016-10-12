@@ -24,7 +24,7 @@ public:
 
 	void OnResize(int width, int height);
 	bool LoadGeometryBuffer(const Geometry *geometry);
-	void DrawGeometry(const Geometry *geometry);
+	void DrawGeometry(Geometry *geometry);
 
 public:
 
@@ -32,5 +32,6 @@ public:
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+	uint texName = 0;
 };
 #endif

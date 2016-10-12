@@ -41,11 +41,40 @@ bool ModuleGameObjectManager::Init()
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
+	root = new GameObject();
+	root->name = "root";
+	root->parent = nullptr;
+
 	return ret;
 }
 
 bool ModuleGameObjectManager::Start()
 {
+	ilutRenderer(ILUT_OPENGL);
+
+	GLubyte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
+	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
+		for (int j = 0; j < CHECKERS_WIDTH; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkImage[i][j][0] = (GLubyte)c;
+			checkImage[i][j][1] = (GLubyte)c;
+			checkImage[i][j][2] = (GLubyte)c;
+			checkImage[i][j][3] = (GLubyte)255;
+		}
+	}
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 	return true;
 }
 
@@ -96,46 +125,77 @@ void ModuleGameObjectManager::LoadGeometry(const char *file)
 		// For each mesh...
 		for (uint i = 0; i < scene->mNumMeshes; ++i)
 		{
-			Geometry *body = new Geometry();
+			Geometry *body = new Geometry(NULL, body->id);
 			aiMesh *new_mesh = scene->mMeshes[i];
 
 			// VERTICES
 			body->num_vertices = new_mesh->mNumVertices;
-			body->vertices = new float3[body->num_vertices];
-			memcpy(body->vertices, new_mesh->mVertices, sizeof(float3) * body->num_vertices);
+			body->vertices = new float[body->num_vertices * 3];
+			memcpy(body->vertices, new_mesh->mVertices, sizeof(float) * body->num_vertices * 3);
 			LOG_ME("New mesh with %d vertices", body->num_vertices);
+
 
 			// NORMALES
 			body->num_normals = new_mesh->mNumVertices;
-			body->normals = new float3[body->num_normals];
-			memcpy(body->normals, new_mesh->mNormals, sizeof(float3) * body->num_vertices);
+			body->normals = new float[body->num_normals * 3];
+			memcpy(body->normals, new_mesh->mNormals, sizeof(float) * body->num_vertices * 3);
 			LOG_ME("New mesh with %d normals", body->num_vertices);
 
 			// INDICES
-			if (new_mesh->HasFaces())
+
+			body->num_indices = new_mesh->mNumFaces * 3;
+			body->indices = new uint[body->num_indices];
+			for (uint j = 0; j < new_mesh->mNumFaces; ++j)
 			{
-				body->num_indices = new_mesh->mNumFaces * 3;
-				body->indices = new uint[body->num_indices];
-				for (uint j = 0; j < new_mesh->mNumFaces; ++j)
+				if (new_mesh->mFaces[j].mNumIndices != 3)
 				{
-					if (new_mesh->mFaces[j].mNumIndices != 3)
-					{
-						LOG_ME("WARNING, geometry face with != 3 indices!");
-					}
-					else
-					{
-						memcpy(&body->indices[j * 3], new_mesh->mFaces[j].mIndices, 3 * sizeof(uint));
-					}
+					LOG_ME("WARNING, geometry face with != 3 indices!");
+				}
+				else
+				{
+					memcpy(&body->indices[j * 3], new_mesh->mFaces[j].mIndices, 3 * sizeof(uint));
 				}
 			}
-
-			App->renderer3D->LoadGeometryBuffer(body);
-			geo.push_back(body);
-		}
+		
+		App->renderer3D->LoadGeometryBuffer(body);
+		geo.push_back(body);
+	}
 
 		aiReleaseImport(scene);
 	}
 	else
 		LOG_ME("Error loading scene %s", file);
 
+}
+
+GameObject* ModuleGameObjectManager::CreateNewGameObject(GameObject* parent, const aiNode* node, const aiScene* scene)
+{
+
+	GameObject *new_go = new GameObject();
+
+	if (parent == NULL)
+		parent = root;
+
+	new_go->parent = parent;
+	new_go->name = node->mName.data;
+
+	for (int i = 0; i < node->mNumMeshes; i++)
+	{
+		Geometry* add_geo = (Geometry*)new_go->AddComponent(Component::ComponentGeometry);
+		add_geo->LoadGeo(scene->mMeshes[node->mMeshes[i]], scene);
+	}
+
+	//Loading child nodes
+	for (int i = 0; i < node->mNumChildren; i++)
+	{
+		new_go->childrens.push_back(CreateNewGameObject(new_go, node->mChildren[i], scene));
+	}
+
+	return new_go;
+
+}
+
+uint ModuleGameObjectManager::LoadIMG(char *path)
+{
+	return ilutGLLoadImage(path);
 }

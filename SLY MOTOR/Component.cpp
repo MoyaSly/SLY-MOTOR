@@ -14,36 +14,13 @@ Component::~Component()
 {
 }
 
-void Component::Enable()
-{
-	if (enabled == false)
-	{
-		enabled = true;
-	}
-}
+void Component::Enable(){if (enabled == false){enabled = true;}}
 
-void Component::Disable()
-{
-	if (enabled == true)
-	{
-		enabled = false;
-	}
-}
+void Component::Disable(){if (enabled == true){enabled = false;}}
 
-void Component::Update()
-{
-	if (enabled)
-	{
-	}
-}
+void Component::Update(){}
 
-ComponentType Component::GetType()
-{
-	return type;
-}
+Component::ComponentType Component::GetType(){return type;}
 
-bool Component::IsEnabled()
-{
-	return enabled;
-}
+bool Component::IsEnabled(){return enabled;}
 

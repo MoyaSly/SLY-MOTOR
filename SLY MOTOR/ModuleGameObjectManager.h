@@ -21,13 +21,15 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	//GameObject* CreateNewGameObject(std::string name, GameObject* parent = NULL);
-
+	GameObject* CreateNewGameObject(GameObject* parent, const aiNode* node, const aiScene* scene);
 	std::vector<Geometry*> geo;
-	void LoadGeometry(const char *file);
 	bool geometry_loaded = false;
-	uint texture_id = 0;
+	uint texture;
+	GameObject *root = NULL;
 
+	void LoadGeometry(const char *file);
+	uint LoadIMG(char *path);
+	
 };
 
 #endif
