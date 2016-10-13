@@ -12,8 +12,7 @@ struct aiScene;
 class Geometry : public Component
 {
 public:
-	//Geometry(GameObject* parent, int id);
-	Geometry(GameObject* parent, int id);
+	Geometry(GameObject* _object, int _id);
 	~Geometry();
 
 	// INDICES

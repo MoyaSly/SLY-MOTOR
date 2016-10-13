@@ -11,17 +11,17 @@ GameObject::~GameObject()
 
 }
 
-Component* GameObject::FindComponentType()
+/*Component* GameObject::FindComponentType()
 {
 
-}
+}*/
 
-Component* GameObject::AddComponent(Component::ComponentType type)
+Component* GameObject::AddComponent(ComponentType type)
 {
 	Component *new_comp = nullptr;
 
-	if (type == Component::ComponentGeometry)
-		new_comp = new Geometry(this, components.size());
+	//if (type == ComponentGeometry)
+		new_comp = new Geometry(this, cmp.size());
 
 	return new_comp;
 }

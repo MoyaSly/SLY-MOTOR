@@ -10,17 +10,11 @@
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
 
-Geometry::Geometry(GameObject* _parent, int _id) : Component (parent, id)
-{
-	char* tmp;
-	sprintf(tmp, "Geo", id);
-	name = tmp;
-	type = ComponentGeometry;
-}
+Geometry::Geometry(GameObject* _object, int _id) : Component (_object, _id)
+{}
 
 Geometry::~Geometry()
-{
-}
+{}
 
 bool Geometry::LoadGeo(const aiMesh* mesh, const aiScene* scene)
 {

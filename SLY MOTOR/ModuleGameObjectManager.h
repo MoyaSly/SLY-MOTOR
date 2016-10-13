@@ -3,9 +3,14 @@
 
 #include "Module.h"
 #include "MathGeoLib\MathGeoLib.h"
-#include "GameObject.h"
 #include "Glew\include\glew.h"
+#include "GameObject.h"
+#include <vector>
 
+struct aiMesh;
+struct aiNode;
+struct aiScene;
+class GameObject;
 
 class ModuleGameObjectManager : public Module
 {
@@ -21,11 +26,11 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	GameObject* CreateNewGameObject(GameObject* parent, const aiNode* node, const aiScene* scene);
+	GameObject* CreateNewGameObject(const aiNode* node,  const aiScene* scene, GameObject* parent = NULL);
 	std::vector<Geometry*> geo;
 	bool geometry_loaded = false;
-	uint texture;
-	GameObject *root = NULL;
+	uint texture = 0;
+	GameObject* root = nullptr;
 
 	void LoadGeometry(const char *file);
 	uint LoadIMG(char *path);

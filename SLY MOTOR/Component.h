@@ -7,28 +7,42 @@
 
 class GameObject;
 
+enum ComponentType
+{
+	ComponentGeometry
+};
+
 class Component
 {
 public:
 
-	enum ComponentType
+	Component(GameObject* _object, int _id) {}
+	virtual ~Component() {}
+
+	virtual void Enable()
 	{
-		ComponentGeometry
-	};
+		if (enabled == false) 
+		{ 
+			enabled = true; 
+		}
+	}
 
-	Component(GameObject* parent, int id);
-	~Component();
+	virtual update_status Update() { return UPDATE_CONTINUE; }
 
-	virtual void Enable();
-	virtual void Update();
-	virtual void Disable();
+	virtual void Disable()
+	{
+		if (enabled == true) 
+		{ 
+			enabled = false; 
+		}
+	}
 
-	ComponentType GetType();
-	bool IsEnabled();
+	ComponentType GetType() { return type; }
+	bool IsEnabled() { return enabled; };
 
 public:
 	std::string name;
-	GameObject* parent;
+	GameObject* object;
 	int id;
 	ComponentType type;
 

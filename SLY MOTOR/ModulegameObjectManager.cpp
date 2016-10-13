@@ -111,10 +111,29 @@ bool ModuleGameObjectManager::CleanUp()
 	return true;
 }
 
-/*GameObject* ModuleGameObjectManager::CreateNewGameObject(string name, GameObject* parent = NULL)
-{
 
-}*/
+GameObject* ModuleGameObjectManager::CreateNewGameObject(const aiNode* node, const aiScene* scene, GameObject* parent)
+{
+	GameObject *new_go = new GameObject();
+
+	new_go->parent = parent;
+	new_go->name = node->mName.data;
+
+	for (int i = 0; i < node->mNumMeshes; i++)
+	{
+		Geometry* add_geo = (Geometry*)new_go->AddComponent(ComponentGeometry);
+		add_geo->LoadGeo(scene->mMeshes[node->mMeshes[i]], scene);
+	}
+
+	//Loading child nodes
+	for (int i = 0; i < node->mNumChildren; i++)
+	{
+		new_go->childrens.push_back(CreateNewGameObject(node->mChildren[i], scene, new_go));
+	}
+
+	return new_go;
+
+}
 
 void ModuleGameObjectManager::LoadGeometry(const char *file)
 {
@@ -125,7 +144,7 @@ void ModuleGameObjectManager::LoadGeometry(const char *file)
 		// For each mesh...
 		for (uint i = 0; i < scene->mNumMeshes; ++i)
 		{
-			Geometry *body = new Geometry(NULL, body->id);
+			Geometry *body = new Geometry(root, 0);
 			aiMesh *new_mesh = scene->mMeshes[i];
 
 			// VERTICES
@@ -156,42 +175,15 @@ void ModuleGameObjectManager::LoadGeometry(const char *file)
 					memcpy(&body->indices[j * 3], new_mesh->mFaces[j].mIndices, 3 * sizeof(uint));
 				}
 			}
-		
-		App->renderer3D->LoadGeometryBuffer(body);
-		geo.push_back(body);
-	}
+
+			App->renderer3D->LoadGeometryBuffer(body);
+			geo.push_back(body);
+		}
 
 		aiReleaseImport(scene);
 	}
 	else
 		LOG_ME("Error loading scene %s", file);
-
-}
-
-GameObject* ModuleGameObjectManager::CreateNewGameObject(GameObject* parent, const aiNode* node, const aiScene* scene)
-{
-
-	GameObject *new_go = new GameObject();
-
-	if (parent == NULL)
-		parent = root;
-
-	new_go->parent = parent;
-	new_go->name = node->mName.data;
-
-	for (int i = 0; i < node->mNumMeshes; i++)
-	{
-		Geometry* add_geo = (Geometry*)new_go->AddComponent(Component::ComponentGeometry);
-		add_geo->LoadGeo(scene->mMeshes[node->mMeshes[i]], scene);
-	}
-
-	//Loading child nodes
-	for (int i = 0; i < node->mNumChildren; i++)
-	{
-		new_go->childrens.push_back(CreateNewGameObject(new_go, node->mChildren[i], scene));
-	}
-
-	return new_go;
 
 }
 

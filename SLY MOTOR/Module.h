@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __Module_H__
+#define __Module_H__
+
 #include "Globals.h"
 #include <string>
 
@@ -52,3 +54,5 @@ public:
 	virtual void OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	{}
 };
+
+#endif
