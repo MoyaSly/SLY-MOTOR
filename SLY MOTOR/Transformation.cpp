@@ -3,22 +3,26 @@
 #include "GameObject.h"
 
 Transformation::Transformation(GameObject* _object, int _id) : Component (_object, _id)
-{}
+{
+	rotation = Quat::identity;
+	position = float3::zero;
+	scale.Set(1.f, 1.f, 1.f);
+}
 Transformation::~Transformation()
 {}
 
-mat4x4* Transformation::SetRotation(float3 rot)
+Quat Transformation::SetRotation(float3 rot)
 {
-	mat4x4* trans = new mat4x4();
+	Quat trans = rotation;
 	return trans;
 }
-vec3* Transformation::SetMove(float3 pos)
+float3 Transformation::SetMove(float3 pos)
 {
-	vec3* trans = new vec3();
+	float3 trans = position;
 	return trans;
 }
-vec3* Transformation::SetScale(float3 scal)
+float3 Transformation::SetScale(float3 scal)
 {
-	vec3* trans = new vec3();
+	float3 trans = scale;
 	return trans;
 }

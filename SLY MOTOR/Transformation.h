@@ -11,9 +11,17 @@ public:
 	Transformation(GameObject* _object, int _id);
 	~Transformation();
 
-	mat4x4* SetRotation(float3 rot);
-	vec3* SetMove(float3 pos);
-	vec3* SetScale(float3 scal);
+	Quat rotation;
+	float3 position;
+	float3 scale;
+
+	Quat SetRotation(float3 rot);
+
+	float3 SetMove(float3 pos);
+	float3 SetScale(float3 scal);
+
+
+
 };
 
 #endif
