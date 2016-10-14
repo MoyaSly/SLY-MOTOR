@@ -51,7 +51,7 @@ bool ModuleGameObjectManager::Init()
 bool ModuleGameObjectManager::Start()
 {
 	ilutRenderer(ILUT_OPENGL);
-
+/*
 	GLubyte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
 	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
 		for (int j = 0; j < CHECKERS_WIDTH; j++) {
@@ -74,7 +74,7 @@ bool ModuleGameObjectManager::Start()
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
+	*/
 	return true;
 }
 

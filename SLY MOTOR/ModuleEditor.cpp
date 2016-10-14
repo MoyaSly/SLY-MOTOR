@@ -27,8 +27,8 @@ bool ModuleEditor::Init()
 	h = App->window->GetHeight();
 
 	//strcpy(fbx_name, ".fbx");
-	strcpy(fbx_name, "C:/Users/MIQUEL/Documents/GitHub/SLY-MOTOR/SLY MOTOR/Brutus.fbx");
-	//strcpy(fbx_name, "C:/Users/miquelms4/Documents/GitHub/SLY-MOTOR/SLY MOTOR/Brutus.fbx");
+	//strcpy(fbx_name, "C:/Users/MIQUEL/Documents/GitHub/SLY-MOTOR/SLY MOTOR/Brutus.fbx");
+	strcpy(fbx_name, "C:/Users/miquelms4/Documents/GitHub/SLY-MOTOR/SLY MOTOR/Brutus.fbx");
 
 	show_test_window = false;
 	show_configuration = false;
